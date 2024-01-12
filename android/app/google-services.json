@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "304893166680",
+    "project_id": "evenzio-719c2",
+    "storage_bucket": "evenzio-719c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304893166680:android:b70805a351d4a6e5eab62d",
+        "android_client_info": {
+          "package_name": "com.example.firstproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyTSTPbdjermSgWnOYXw7iy1mRZtaHFrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
