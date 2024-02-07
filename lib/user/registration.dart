@@ -50,8 +50,10 @@ title:  Center(
 
 
         ),
+        from=="NEW"?
         text1(24, "Registration"
-            ),
+            ):
+            SizedBox(),
 
 
       ],
@@ -120,7 +122,9 @@ title:  Center(
                     }
 
 
-                  },child: button("REGISTER",16, height/18, width/2,));
+                  },child:from=="NEW" ?button("REGISTER",16, height/18, width/2,):
+                  button("UPDATE",16, height/18, width/2,)
+                  );
                 }
               )
 

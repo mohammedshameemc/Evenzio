@@ -2,7 +2,7 @@ import 'package:firstproject/constance/colors.dart';
 import 'package:firstproject/user/favorite.dart';
 import 'package:firstproject/user/home.dart';
 import 'package:firstproject/user/home1.dart';
-import 'package:firstproject/user/prifile.dart';
+import 'package:firstproject/user/profile.dart';
 import 'package:firstproject/user/review.dart';
 import 'package:flutter/material.dart';
 

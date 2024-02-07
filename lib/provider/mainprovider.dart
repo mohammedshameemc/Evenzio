@@ -398,8 +398,8 @@ String productSelectedCategoryID ="";
 
 // this is over add category
 
-  String productSelectedItemID = "";
-  String productSelectedItemid = "";
+  String productSelectedItemID = " ";
+  String productSelectedItemid = " ";
 
   TextEditingController itemNameController = TextEditingController();
   File? itemFileImage;
@@ -656,7 +656,7 @@ String productSelectedCategoryID ="";
       notifyListeners();
     }
     if (From == "NEW") {
-      db.collection("CUSTOMERS").doc(id).set(customermap);
+
 
       db.collection("USER").doc(id).set(usermap);
     } else {

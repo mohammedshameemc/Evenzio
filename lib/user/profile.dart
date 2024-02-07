@@ -72,6 +72,7 @@ class profile extends StatelessWidget {
                   }))
             ]),
           ),
+          
           backgroundColor: Colors.transparent,
           title: Padding(
             padding: EdgeInsets.only(bottom: 30),

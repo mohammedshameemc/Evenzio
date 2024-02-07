@@ -34,6 +34,7 @@ class AdminHome extends StatelessWidget {
         backgroundColor: maincolor,
 
 
+
         leading: IconButton(
           onPressed: () {
             back(context);
@@ -141,6 +142,7 @@ class AdminHome extends StatelessWidget {
     Consumer<MainProvider>(
               builder: (context,value,child) {
                 value.getItem();
+
 
                 return  Icon(Icons.arrow_forward_ios_outlined,color: Colors.white);
               }

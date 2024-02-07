@@ -40,6 +40,7 @@ class _homeState extends State<home> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+
               Consumer<MainProvider>(builder: (context, valu, child) {
                 return Column(
                   children: [
@@ -64,6 +65,7 @@ class _homeState extends State<home> {
                           ),
                         );
                       },
+
                       options: CarouselOptions(
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           height: 200,
@@ -86,7 +88,8 @@ class _homeState extends State<home> {
               SizedBox(height: 10,),
               Padding(
                 padding:  EdgeInsets.only(left:15),
-                child: Container(height: height/1.8,width: 360,decoration:
+                child:
+                Container(height: height/1.8,width: 360,decoration:
                 BoxDecoration(boxShadow: [BoxShadow(spreadRadius: 2,blurRadius:3,color: Colors.grey)],borderRadius: BorderRadius.only(topLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20)),color:color2,
                 ),child: Padding(
@@ -95,7 +98,6 @@ class _homeState extends State<home> {
                     children: [
                       text2(20, "Our team features:-"),
                       SizedBox(height: 40,),
-
                       text2(14, "-Planning."),
                       SizedBox(height: 20,),
                       text2(14, "-Operation and execution of tasks."),
