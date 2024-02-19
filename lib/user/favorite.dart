@@ -20,39 +20,6 @@ class favorite extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    // List<String> itemimage=[
-    //   "assets/watermelon.png",
-    //   "assets/stage2.png",
-    //   "assets/mint.png",
-    //   "assets/broast.png",
-    //   "assets/biriyani.png",
-    //   "assets/mandhi.png",
-    //
-    //
-    //
-    // ];
-    // List<String> itemname=[
-    //   "Watermelon",
-    //   "Round stage",
-    //   "Mint tea",
-    //   "Broast ",
-    //   "Chicken biriyani",
-    //   "Chicken mandi",
-    //
-    //
-    //
-    // ];
-    // List<String> rate=[
-    //   "RS:10(per)",
-    //   "RS:8000/- ",
-    //   "RS:10(per)",
-    //   "RS:50(per)",
-    //   "RS:100(per)",
-    //   "RS:150(per)",
-    //
-    //
-    //
-    // ];
 
     return  Container( height: height,
       width: width,

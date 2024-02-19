@@ -42,7 +42,7 @@ class profile extends StatelessWidget {
                 child: Icon(Icons.arrow_back_ios_new, color: Colors.white)),
           ),
           automaticallyImplyLeading: false,
-          toolbarHeight: height * 0.3,
+          toolbarHeight: height * 0.31,
           flexibleSpace: Container(
             height: height / 2,
             child: Stack(children: [
@@ -84,7 +84,7 @@ class profile extends StatelessWidget {
         body: SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.all(20),
-            height: height / 1.5,
+            height: height*0.75,
             width: width,
             decoration: BoxDecoration(
               boxShadow: [BoxShadow(spreadRadius: 1,color: Colors.grey, blurRadius: 2)],
@@ -298,7 +298,9 @@ class profile extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Si
+              SizedBox(
+                height: 15,
+              )
                 ],
               );
             }),
