@@ -1221,13 +1221,13 @@ String productSelectedCategoryID ="";
 
 
 
-    getFavorite();
+    getUserFavorite(userId);
     // getUserPhoto(userId, userName);
     notifyListeners();
   }
 
-  void getFavorite(){
-    db.collection("FAVORITE").get().then((value) {
+  void getUserFavorite(String userid){
+    db.collection("FAVORITE").where("USER_ID",isEqualTo: userid).get().then((value) {
       if (value.docs.isNotEmpty) {
         favoriteList.clear();
         for (var value in value.docs) {
@@ -1248,24 +1248,46 @@ String productSelectedCategoryID ="";
       notifyListeners();
     });
   }
-  void removeFavorite(selectedid, BuildContext context) {
+  void getAdminFavorite(String userid){
+    db.collection("FAVORITE").get().then((value) {
+      if (value.docs.isNotEmpty) {
+        favoriteList.clear();
+        for (var value in value.docs) {
+          favoriteList.add(favoriteModels(
+              value.get("USER_ID").toString(),
+              value.get("ITEM_ID").toString(),
+              value.get("PHOTO").toString(),
+              value.get("NAME").toString(),
+              value.get("RATE").toString(),
+              value.id
+
+
+
+          ));
+          notifyListeners();
+        }
+      }
+      notifyListeners();
+    });
+  }
+  void removeFavorite(selectedid, BuildContext context,String userid) {
     db.collection("FAVORITE").doc(selectedid).delete();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Remove in Favorite",style: TextStyle(color:maincolor, fontStyle: FontStyle.italic),),
       backgroundColor: Colors.white,
     )
     );
-    getFavorite();
+    getUserFavorite(userid);
     notifyListeners();
   }
-  void deletefavourate( itemid, BuildContext context) {
+  void deletefavourate( itemid, BuildContext context,String userid) {
     db.collection("FAVORITE").doc(itemid).delete();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Remove in Favorite",style: TextStyle(color:maincolor, fontStyle: FontStyle.italic),),
       backgroundColor: Colors.white,
     )
     );
-    getFavorite();
+    getUserFavorite(userid);
     notifyListeners();
   }
 // void removeAllFavorite(itemid){

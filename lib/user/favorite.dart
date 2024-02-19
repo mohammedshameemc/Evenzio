@@ -136,7 +136,7 @@ class favorite extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(width: 5,),
-                                      InkWell(onTap: () {value.removeFavorite(value.favoriteList[index].id, context);
+                                      InkWell(onTap: () {value.removeFavorite(value.favoriteList[index].id, context,userid);
 
                                       },child: Icon(Icons.favorite,color: Color(0xfffFF6464),size: 30,))
                                     ],

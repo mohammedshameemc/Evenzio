@@ -67,43 +67,45 @@ class _ReviewState extends State<Review> {
                         builder: (ctx) => AlertDialog(
                           title: text2(16, "Review"),
                           actions: [
-                            Row(
+                            SizedBox(width: width,
+                              child: Row(
 
-                              children: [
+                                children: [
 
-                                RatingBar(
-                                    initialRating: 0,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    ratingWidget: RatingWidget(
-                                        full: const Icon(Icons.star, color: Colors.orange),
-                                        half: const Icon(
-                                          Icons.star_half,
-                                          color: Colors.orange,
-                                        ),
-                                        empty: const Icon(
-                                          Icons.star_outline,
-                                          color: Colors.orange,
-                                        )),
-                                    onRatingUpdate: (value) {
-                                      setState(() {
-                                        print("rty"+_ratingValue.toString());
-                                        _ratingValue = value;
-                                      });
-                                    }),
-                                Text(
-                                    _ratingValue != null ? _ratingValue.toString() : 'Rate it!',
-                                    style: const TextStyle(color: Colors.white, fontSize: 13),
-                                    ),
-
-
-
+                                  RatingBar(
+                                      initialRating: 0,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      ratingWidget: RatingWidget(
+                                          full: const Icon(Icons.star, color: Colors.orange),
+                                          half: const Icon(
+                                            Icons.star_half,
+                                            color: Colors.orange,
+                                          ),
+                                          empty: const Icon(
+                                            Icons.star_outline,
+                                            color: Colors.orange,
+                                          )),
+                                      onRatingUpdate: (value) {
+                                        setState(() {
+                                          print("rty"+_ratingValue.toString());
+                                          _ratingValue = value;
+                                        });
+                                      }),
+                                  Text(
+                                      _ratingValue != null ? _ratingValue.toString() : 'Rate it!',
+                                      style: const TextStyle(color: Colors.white, fontSize: 9),
+                                      ),
 
 
 
-                              ],
 
+
+
+                                ],
+
+                              ),
                             ),
                             Consumer<MainProvider>(
                               builder: (context,value,child) {
@@ -114,7 +116,7 @@ class _ReviewState extends State<Review> {
 
 
 
-                                },child: text2(16, "Add"));
+                                },child: text2(15, "Add"));
                               }
                             )
 
@@ -185,76 +187,80 @@ class _ReviewState extends State<Review> {
                   return  Container(margin:EdgeInsets.all(10),height:  height/2,width: width,
                     decoration: BoxDecoration(boxShadow: [BoxShadow(spreadRadius: 2,blurRadius: 2,color: Colors.grey)],borderRadius:BorderRadius.only
                       (topLeft: Radius.circular(20),bottomRight: Radius.circular(20),),color: color2 ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child:   Row(
-                        children: [
-                          Column(crossAxisAlignment: CrossAxisAlignment.start,
+                    child: SizedBox(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child:   Row(
+                          children: [
+                            Column(crossAxisAlignment: CrossAxisAlignment.start,
 
-                            children: [
+                              children: [
 
-                              CircleAvatar(radius:40,backgroundImage: NetworkImage(value.photo,scale: 1.0),
+                                CircleAvatar(radius:40,backgroundImage: NetworkImage(value.photo,scale: 1.0),
 
-                              ),
-                              SizedBox(height: 10,),
+                                ),
+                                SizedBox(height: 10,),
 
-                              text2(14,widget.userName ),
-                              SizedBox(height: 10,),
+                                text2(14,widget.userName ),
+                                SizedBox(height: 10,),
 
-                              Row(
-                                children: [
-                                  RatingBar(itemSize: 15,
-                                      initialRating: double.parse(item.rating),
-                                      direction: Axis.horizontal,
-                                      ignoreGestures: true,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      ratingWidget: RatingWidget(
-                                          full: const Icon(Icons.star, color: Colors.orange),
-                                          half: const Icon(
-                                            Icons.star_half,
-                                            color: Colors.orange,
-                                          ),
-                                          empty: const Icon(
-                                            Icons.star_outline,
-                                            color: Colors.orange,
-                                          )),
-                                      onRatingUpdate: (value) {
-                                        setState(() {
-                                          print("rty"+_ratingValue.toString());
-                                          _ratingValue = value;
-                                        });
-                                      }),
-                                  Text(item.rating,
-                                    style: const TextStyle(color: Colors.white, fontSize: 13),
+                                SizedBox(width:width/3.8,
+                                  child: Row(
+                                    children: [
+                                      RatingBar(itemSize: 15,
+                                          initialRating: double.parse(item.rating),
+                                          direction: Axis.horizontal,
+                                          ignoreGestures: true,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          ratingWidget: RatingWidget(
+                                              full: const Icon(Icons.star, color: Colors.orange),
+                                              half: const Icon(
+                                                Icons.star_half,
+                                                color: Colors.orange,
+                                              ),
+                                              empty: const Icon(
+                                                Icons.star_outline,
+                                                color: Colors.orange,
+                                              )),
+                                          onRatingUpdate: (value) {
+                                            setState(() {
+                                              print("rty"+_ratingValue.toString());
+                                              _ratingValue = value;
+                                            });
+                                          }),
+                                      Text(item.rating,
+                                        style: const TextStyle(color: Colors.white, fontSize: 13),
+                                      ),
+                                    ],
+
                                   ),
-                                ],
-
-                              ),
+                                ),
 
 
 
 
-                            ],
+                              ],
 
-                          ),
+                            ),
 
-                          Column(
-                            children: [
-                              Divider(color: Colors.red,thickness: 50,indent: 10,endIndent: 10),
-                              SizedBox(height: 10,),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(width: width/2.5,height: height/8,child: text2(10,item.review)),
-                              )
-                            ],
-                          )
+                            Column(
+                              children: [
+                                Divider(color: Colors.red,thickness: 50,indent: 10,endIndent: 10),
+                                SizedBox(height: 10,),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(width: width/2.5,height: height/8,child: text2(10,item.review)),
+                                )
+                              ],
+                            )
 
 
-                        ],
+                          ],
+                        ),
+
+
                       ),
-
-
                     ),
 
                   );

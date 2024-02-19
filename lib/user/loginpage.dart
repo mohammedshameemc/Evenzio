@@ -32,8 +32,9 @@ class loginpage extends StatelessWidget {
               SizedBox(height: 150,),
               CircleAvatar(
                 radius: 45,
-                backgroundColor: maincolor,
-                child: Image.asset("assets/person.png"),
+                backgroundColor: Colors.white
+                ,
+                child: Image.asset("assets/spoon.png"),
               ),
               text1(24, "Login"),
               SizedBox(

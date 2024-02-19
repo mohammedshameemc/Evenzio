@@ -126,7 +126,7 @@ class _homeState extends State<home> {
                       // value.getCategory();
                       // value.getItem();
                       value.getUser();
-                      value.getFavorite();
+                      value.getUserFavorite(widget.userId);
                       value.getReviews();
                       value.getUserPhoto(widget.userId, widget.userName);
 

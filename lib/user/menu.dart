@@ -14,93 +14,93 @@ class menu extends StatelessWidget {
   String mainhead;
   String UserId;
 
-  
-  
-   menu({super.key,required this.mainhead,required this.UserId});
+  menu({super.key, required this.mainhead, required this.UserId});
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
-
-
-    return Container( height: height,
+    return Container(
+      height: height,
       width: width,
       decoration: bgImg(),
       child: Scaffold(
         backgroundColor: tranceparent,
-        appBar: AppBar(automaticallyImplyLeading: false,
+        appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: maincolor,
             title: Center(child: text1(24, mainhead)),
-
-
             leading: IconButton(
               onPressed: () {
                 back(context);
-
-
               },
-              icon: Icon(Icons.arrow_back_ios_new,color: Colors.white),
+              icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
             ),
             actions: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.notifications_none,size: 33,color: Colors.white,),
+                icon: Icon(
+                  Icons.notifications_none,
+                  size: 33,
+                  color: Colors.white,
+                ),
               ),
             ]),
-
         body: Column(
           children: [
             Expanded(
-              child: Consumer<MainProvider>(
-                builder: (context,value,child) {
-                  return GridView.builder(
+              child: Consumer<MainProvider>(builder: (context, value, child) {
+                return GridView.builder(
                     shrinkWrap: true,
-                      padding: EdgeInsetsDirectional.all(50),
-                      itemCount: value.categoryList.length,
-                      gridDelegate:SliverGridDelegateWithFixedCrossAxisCount 	(
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 30,
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.8),
-                      itemBuilder: (BuildContext context, int index) {
-                      var item=value.categoryList[index];
-                        return InkWell(onTap: (){
+                    padding: EdgeInsetsDirectional.all(40),
+                    itemCount: value.categoryList.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 30,
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.8),
+                    itemBuilder: (BuildContext context, int index) {
+                      var item = value.categoryList[index];
+                      return InkWell(
+                        onTap: () {
                           // print(item.id+"shm");
                           value.getuseritem(item.id);
 
-                        callNext(context, Juice(headname: item.name,userId: UserId,));
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: color3,
-                                borderRadius:BorderRadius.circular(20),                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(item.photo),scale: 1.0)),
-                           child:  Padding(
-                             padding:  EdgeInsets.only(top: 120),
-                             child: Container(height: 60,width: 360,decoration:
-                             BoxDecoration(borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20)),color: color2,),
-                                  child: Center(child: text2(12,item.name))),
-                           ),
+                          callNext(
+                              context,
+                              Juice(
+                                headname: item.name,
+                                userId: UserId,
+                              ));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: color3,
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(item.photo),
+                                  scale: 1.0)),
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 120),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20)),
+                                  color: color2,
+                                ),
+                                child: Center(child: text2(12, item.name))),
                           ),
-                        );
-                      });
-                }
-              ),
+                        ),
+                      );
+                    });
+              }),
             ),
           ],
         ),
       ),
     );
-
-
-
-
-
-
-
-
   }
 }

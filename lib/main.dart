@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firstproject/provider/loginProvider.dart';
 import 'package:firstproject/provider/mainprovider.dart';
+import 'package:firstproject/user/home.dart';
 import 'package:firstproject/user/splash.dart';
 
 
@@ -15,6 +16,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: Splash(),
+        // home: home(),
         // home: AdminHome(),
 
 

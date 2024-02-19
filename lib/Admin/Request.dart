@@ -11,6 +11,7 @@ import 'Request2.dart';
 
 
 class Request extends StatelessWidget {
+
   const Request({super.key});
 
   @override
@@ -53,7 +54,7 @@ class Request extends StatelessWidget {
                     return InkWell(onTap: () {
 
                       if(item.orderstatus=="Requested"){
-                        value.getFavorite();
+
                         value.getadminorderdetils();
                         callNext(context, Request2(id: item.orderid,name: item.ordername,Time: item.ordertime,Date: item.orderdate,Function: item.ordertype,Gustcount: item.ordergust,Address: item.orderaddress,));
 
