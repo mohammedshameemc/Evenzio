@@ -96,7 +96,7 @@ class favorite extends StatelessWidget {
                                       SizedBox(width: width/4,
                                         child: Column(mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text(item.name,style: GoogleFonts.inknutAntiqua(fontSize:12,fontWeight: FontWeight.w700,color: Colors.black),),
+                                            Text(item.name,style: GoogleFonts.inknutAntiqua(fontSize: item.name.length >=10?10:15,fontWeight: FontWeight.w700,color: Colors.black),),
 
                                             Text(item.rate)
                                           ],

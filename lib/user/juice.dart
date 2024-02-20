@@ -92,7 +92,7 @@ class Juice extends StatelessWidget {
                                             children: [
                                               Column(mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
-                                                  Text(item.name,style: GoogleFonts.inknutAntiqua(fontSize:12,fontWeight: FontWeight.w700,color: Colors.black),),
+                                                  Text(item.name,style: GoogleFonts.inknutAntiqua(fontSize:item.name.length >=10?10:22,fontWeight: FontWeight.w700,color: Colors.black),),
 
                                                   Text(item.price)
                                                 ],

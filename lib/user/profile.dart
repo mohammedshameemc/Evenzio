@@ -32,7 +32,14 @@ class profile extends StatelessWidget {
       decoration: bgImg(),
       child: Scaffold(
         backgroundColor: tranceparent,
-        appBar: AppBar(backgroundColor: maincolor,),
+        appBar: AppBar(backgroundColor: maincolor, leading: IconButton(
+          onPressed: () {
+            back(context);
+
+
+          },
+          icon: Icon(Icons.arrow_back_ios_new,color: Colors.white),
+        ),),
         // appBar: AppBar(
         //
         //   leading: Padding(
@@ -120,34 +127,38 @@ class profile extends StatelessWidget {
                   color: color2,
                 ),
                 child: Consumer<MainProvider>(builder: (context, value, child) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  return Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.person,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          text2(16, value.name),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Divider(
-                        color: Colors.white,
-                        thickness: 1,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20, left: 20),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [ SizedBox(height: 10,),
+
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+
+
+                          children: [
+                            Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            text2(16, value.name),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
                               Icons.home,
@@ -159,17 +170,14 @@ class profile extends StatelessWidget {
                             text2(16, value.address),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Divider(
-                        color: Colors.white,
-                        thickness: 1,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20, left: 20),
-                        child: Row(
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                        ),
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(
@@ -182,19 +190,16 @@ class profile extends StatelessWidget {
                             text2(16, value.phone),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Divider(
-                        color: Colors.white,
-                        thickness: 1,
-                      ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                        ),
 
 
-                      Padding(
-                        padding: EdgeInsets.only(top: 10, left: 20),
-                        child: Row(
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             text2(16, "More Settings"),
@@ -208,15 +213,12 @@ class profile extends StatelessWidget {
                             )
                           ],
                         ),
-                      ),
-                      // SizedBox(height: 10,),
-                      Divider(
-                        color: Colors.white,
-                        thickness: 1,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10, left: 20),
-                        child: Row(
+                        // SizedBox(height: 10,),
+                        Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                        ),
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             text2(18, "Logout"),
@@ -272,15 +274,12 @@ class profile extends StatelessWidget {
                             )
                           ],
                         ),
-                      ),
-                      // SizedBox(height: 10,),
-                      Divider(
-                        color: Colors.white,
-                        thickness: 1,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10, left: 20),
-                        child: Row(
+                        // SizedBox(height: 10,),
+                        Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                        ),
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             text2(16, "Edit Profile"),
@@ -299,16 +298,13 @@ class profile extends StatelessWidget {
                             )
                           ],
                         ),
-                      ),
-                      // SizedBox(height: 10,),
-                      Divider(
-                        color: Colors.white,
-                        thickness: 1,
-                      ),
+                        // SizedBox(height: 10,),
+                        Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                        ),
 
-                      Padding(
-                        padding: EdgeInsets.only(top: 10, left: 20),
-                        child: Row(
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             text2(16, "Appoitment"),
@@ -324,14 +320,15 @@ class profile extends StatelessWidget {
                             )
                           ],
                         ),
-                      ),
-                  SizedBox(
-                    height: 15,
-                  )
-                    ],
+
+                      ],
+                    ),
                   );
                 }),
               ),
+              SizedBox(
+                height: 50,
+              )
             ],
           ),
         ),
