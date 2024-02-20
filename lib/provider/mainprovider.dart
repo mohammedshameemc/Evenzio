@@ -346,7 +346,6 @@ String productSelectedCategoryID ="";
         Map<dynamic, dynamic> map1 = value.data() as Map;
         categorycontroller.text = map1["MAIN_CATEGORY"].toString();
         categorycontroller.text = map1["MAIN_CATEGORY_ID"].toString();
-
         namecontroller.text = map1["NAME"].toString();
         imageUrl = map1["PHOTO"].toString();
         fileImage=null;

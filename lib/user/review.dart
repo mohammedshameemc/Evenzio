@@ -250,7 +250,7 @@ class _ReviewState extends State<Review> {
                                 SizedBox(height: 10,),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(width: width/2.5,height: height/8,child: text2(10,item.review)),
+                                  child: SizedBox(width: width/2.5,height: height/8,child: text2(item.review.length >=10?10:13,item.review)),
                                 )
                               ],
                             )
