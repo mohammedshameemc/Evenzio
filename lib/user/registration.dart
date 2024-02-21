@@ -2,7 +2,7 @@ import 'package:firstproject/constance/callfunctions.dart';
 import 'package:firstproject/constance/colors.dart';
 import 'package:firstproject/provider/mainprovider.dart';
 import 'package:firstproject/refactorin/widget.dart';
-import 'package:firstproject/user/home.dart';
+import 'package:firstproject/user/getstartscreen.dart';
 import 'package:firstproject/user/loginpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

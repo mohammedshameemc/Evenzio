@@ -4,8 +4,8 @@ class favoriteModels{
   String photo;
   String name;
   String rate;
-  String id;
+  String favid;
 
 
-  favoriteModels(this.userid,this.itemid,this.photo, this.name, this.rate,this.id,);
+  favoriteModels(this.userid,this.itemid,this.photo, this.name, this.rate,this.favid,);
 }

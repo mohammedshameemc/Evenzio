@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firstproject/provider/loginProvider.dart';
 import 'package:firstproject/provider/mainprovider.dart';
-import 'package:firstproject/user/home.dart';
+import 'package:firstproject/user/getstartscreen.dart';
 import 'package:firstproject/user/splash.dart';
 
 

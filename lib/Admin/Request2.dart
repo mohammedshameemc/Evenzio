@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../constance/callfunctions.dart';
 import '../provider/mainprovider.dart';
 import '../refactorin/widget.dart';
-import '../user/home.dart';
+import '../user/getstartscreen.dart';
 
 class Request2 extends StatelessWidget {
   String id;
@@ -90,9 +90,9 @@ class Request2 extends StatelessWidget {
           return Column(
             children: [
               CarouselSlider.builder(
-                itemCount:value.favoriteList.length,
+                itemCount:value.orderList.length,
                 itemBuilder: (context, index, realIndex) {
-                  var item= value.favoriteList[index];
+                  var item= value.orderList[index];
 
                   return Container(
                     margin:EdgeInsets.all(5),height: height,width: width,
@@ -103,17 +103,18 @@ class Request2 extends StatelessWidget {
                         boxShadow: [BoxShadow(spreadRadius: 2,blurRadius: 2,color: Colors.grey),],
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(item.photo))),
+                            image: NetworkImage(item.itemphoto))),
                     child:  Padding(
                       padding:  EdgeInsets.only(top: 150),
                       child: Container(height:50 ,width: 180,decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color:Colors.white),
                           child: Row(mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Column(mainAxisAlignment: MainAxisAlignment.center,
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(item.name,style: GoogleFonts.inknutAntiqua(fontSize:11,fontWeight: FontWeight.w700,color: Colors.black),),
+                                  Text(item.itemname,style: GoogleFonts.inknutAntiqua(fontSize:11,fontWeight: FontWeight.w700,color: Colors.black),),
 
-                                  Text(item.rate)
+                                  Text(item.itemrate)
                                 ],
                               ),
                               SizedBox(width: 5,),
@@ -202,9 +203,9 @@ class Request2 extends StatelessWidget {
                               padding: const EdgeInsets.all(10),
                               child: text2(14, Address),
                             ), ),
-                          SizedBox( height: 5,),
+                          SizedBox( height: 20,),
                           Padding(
-                            padding: const EdgeInsets.all(40),
+                            padding: const EdgeInsets.only(left: 20,right: 20),
                             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 InkWell(onTap: (){
@@ -262,7 +263,7 @@ class Request2 extends StatelessWidget {
 
                                 }
                                   ,
-                                  child: Container(height: height/15, width: 130,decoration: BoxDecoration(borderRadius: BorderRadius.circular(40),color: maincolor),
+                                  child: Container(height: height/15, width: width/3,decoration: BoxDecoration(borderRadius: BorderRadius.circular(40),color: maincolor),
                                   child: Center(
                                     child: Text("Reject",style: GoogleFonts.inknutAntiqua
                                       (fontSize:17,fontWeight: FontWeight.w700,color: red,),
@@ -278,7 +279,7 @@ class Request2 extends StatelessWidget {
 
 
                                 },
-                                  child: Container(height: height/15, width: 130,decoration: BoxDecoration(borderRadius: BorderRadius.circular(40),color: maincolor),
+                                  child: Container(height: height/15, width: width/3,decoration: BoxDecoration(borderRadius: BorderRadius.circular(40),color: maincolor),
                                    child: Center(child: text2(17, "Accept")),
                                   ),
                                 ),

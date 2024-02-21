@@ -12,13 +12,14 @@ import 'package:provider/provider.dart';
 import '../constance/callfunctions.dart';
 import '../provider/mainprovider.dart';
 import '../refactorin/widget.dart';
-import 'home.dart';
+import 'getstartscreen.dart';
 
 class details extends StatelessWidget {
   String userid;
   List itemid;
+  String username;
 
-   details({super.key,required this.userid,required this.itemid,});
+   details({super.key,required this.userid,required this.itemid,required this.username,});
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -89,7 +90,7 @@ class details extends StatelessWidget {
             Consumer<MainProvider>(builder: (context, value, child) {
               return Column(
                 children: [
-                  CarouselSlider.builder(
+                  value.favoriteList.isNotEmpty?CarouselSlider.builder(
                     itemCount:value.favoriteList.length,
                     itemBuilder: (context, index, realIndex) {
                       var item= value.favoriteList[index];
@@ -135,7 +136,7 @@ class details extends StatelessWidget {
                           value.activeIndex(index);
                           // print("activvgvg"+Activeindex.toString());
                         }),
-                  ),
+                  ):Text("Empty"),
                   // buildIndiCator(
                   //     value.Carosuelimg.length, context, value
                   //     .Activeindex),
@@ -232,7 +233,7 @@ class details extends StatelessWidget {
 
                             text2black(14, "Gust count"),
                             SizedBox(height: 5,),
-                            tF3(1,value.orderGustcontroller),
+                            tF4(1,value.orderGustcontroller),
                             SizedBox(height: 20,),
 
                             text2black(14, "Address"),
@@ -262,12 +263,14 @@ class details extends StatelessWidget {
                                  print("fuivbufuhv"+itemid.length.toString());
                                return TextButton(onPressed: (){
 
-                               value.addOrder(userid,itemid,);
+                               value.addOrder(userid,itemid);
                                value.getuserorderdetils(userid);
                                // value.deletefavourate(itemid,context);
+                               // value.deletefavouratelist(value.favoriteList.length,context);
 
 
-                               callNextReplacement(context, appointment());
+                               // callNextReplacement(context, appointment());
+                                 callNext(context, bottamNavigation(userId: userid,userName:userid ,itemid: itemid,));
 
 
                                }, child: Text("Confirm",style: GoogleFonts.inknutAntiqua

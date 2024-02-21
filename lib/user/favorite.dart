@@ -11,10 +11,8 @@ import 'details.dart';
 
 class favorite extends StatelessWidget {
   String userid;
-  List itemid;
-
-
-   favorite({super.key,required this.userid,required this.itemid,});
+  List itemid;  String username;
+  favorite({super.key,required this.userid,required this.itemid,required this.username,});
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +45,17 @@ class favorite extends StatelessWidget {
                 shape: CircleBorder(),
                 backgroundColor: color2,
                 onPressed: () {
-                  print("jnfvbjkgnv"+itemid.length.toString());
-                  value.clearorder();
-                  value.getallitems(userid);
+                  if(value.favoriteList.isNotEmpty){
+                    print("jnfvbjkgnv"+itemid.length.toString());
+                    value.clearorder();
+                    value.getallitems(userid);
 
-                  callNext(context, details(userid:  userid,itemid:value.itemid,));
+                    callNext(context, details(userid:  userid,itemid:value.itemid,username: username,));
+
+                  }else{
+
+                  }
+
                 },
                 child: text2(10, "Order"),
 
@@ -62,9 +66,9 @@ class favorite extends StatelessWidget {
 
         body:  Consumer<MainProvider>(
           builder: (context,value,child) {
-            return Column(
+            return value.favoriteList.isNotEmpty? Column(
               children: [
-                Expanded(
+               Expanded(
                   child: GridView.builder(
                       shrinkWrap: true,
                       padding: EdgeInsetsDirectional.all(30),
@@ -76,7 +80,9 @@ class favorite extends StatelessWidget {
                           childAspectRatio: 0.8),
                       itemBuilder: (BuildContext context, int index) {
                         var item= value.favoriteList[index];
+
                         return InkWell(onTap: (){
+
 
                         },
                           child:  Container(margin:EdgeInsets.all(5),height: height/3,width: width,
@@ -96,14 +102,15 @@ class favorite extends StatelessWidget {
                                       SizedBox(width: width/4,
                                         child: Column(mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text(item.name,style: GoogleFonts.inknutAntiqua(fontSize: item.name.length >=10?10:15,fontWeight: FontWeight.w700,color: Colors.black),),
+                                            Text(item.name,style: GoogleFonts.inknutAntiqua(fontSize: item.name.length >=10?10:10,fontWeight: FontWeight.w700,color: Colors.black),),
 
                                             Text(item.rate)
                                           ],
                                         ),
                                       ),
                                       SizedBox(width: 5,),
-                                      InkWell(onTap: () {value.removeFavorite(value.favoriteList[index].id, context,userid);
+                                      InkWell(onTap: () {
+                                        value.removeFavorite(value.favoriteList[index].favid, context,userid);
 
                                       },child: Icon(Icons.favorite,color: Color(0xfffFF6464),size: 30,))
                                     ],
@@ -114,7 +121,7 @@ class favorite extends StatelessWidget {
                       }),
                 ),
               ],
-            );
+            ):Center(child: const Text(" Your Favorite is Empty",style: TextStyle(color: Colors.white),));
           }
         ),
 

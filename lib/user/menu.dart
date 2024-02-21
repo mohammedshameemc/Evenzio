@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../refactorin/widget.dart';
-import 'juice.dart';
+import 'menuitemscreen.dart';
 
 class menu extends StatelessWidget {
   String mainhead;
@@ -37,16 +37,8 @@ class menu extends StatelessWidget {
               },
               icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
             ),
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.notifications_none,
-                  size: 33,
-                  color: Colors.white,
-                ),
-              ),
-            ]),
+
+        ),
         body: Column(
           children: [
             Expanded(

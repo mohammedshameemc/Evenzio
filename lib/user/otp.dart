@@ -5,7 +5,7 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
 import '../refactorin/widget.dart';
-import 'home.dart';
+import 'getstartscreen.dart';
 import 'loginpage.dart';
 
 class otp extends StatelessWidget {

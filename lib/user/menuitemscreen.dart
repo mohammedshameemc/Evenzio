@@ -20,17 +20,6 @@ class Juice extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
-
-
-    List<String> itemnames= [
-      "Watermelone",
-      "Pineapple ",
-      "Grape",
-      "Guava",
-      "papaya",
-
-
-    ];
     return  Container( height: height,
       width: width,
       decoration: bgImg(),
@@ -92,7 +81,7 @@ class Juice extends StatelessWidget {
                                             children: [
                                               Column(mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
-                                                  Text(item.name,style: GoogleFonts.inknutAntiqua(fontSize:item.name.length >=10?10:22,fontWeight: FontWeight.w700,color: Colors.black),),
+                                                  Text(item.name,style: GoogleFonts.inknutAntiqua(fontSize:item.name.length >=10?10:15,fontWeight: FontWeight.w700,color: Colors.black),),
 
                                                   Text(item.price)
                                                 ],

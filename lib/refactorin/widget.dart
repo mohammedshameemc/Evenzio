@@ -82,6 +82,31 @@ tF3(int lins,TextEditingController control) {
 
   );
 }
+tF4(int lins,TextEditingController control) {
+  return Container(
+    decoration: BoxDecoration(color:  tranceparent,
+        borderRadius: BorderRadius.circular(10)),
+    child: TextFormField(keyboardType: TextInputType.number,
+      validator: (value) {
+      if(value==null||value.isEmpty){return "*Required ";}
+      return  null;
+      }
+      ,style: GoogleFonts.inknutAntiqua(fontSize:12,fontWeight: FontWeight.w700,color: Colors.black),
+      controller: control,
+      maxLines: lins,
+      decoration: InputDecoration(enabledBorder:OutlineInputBorder( borderSide:  BorderSide(color: Color(0xff297C90) ),
+          borderRadius: BorderRadius.circular(5)
+      ) ,
+
+          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey),
+              borderRadius: BorderRadius.circular(5)
+          )
+      ),
+    ),
+
+  );
+}
+
 Widget button(String name,double size,dynamic height,dynamic width,){
 
   return Center(

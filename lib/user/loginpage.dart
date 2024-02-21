@@ -68,7 +68,7 @@ class loginpage extends StatelessWidget {
               SizedBox(height: 30,),
               Consumer<loginProvider>(
                 builder: (context,value,child) {
-                  return InkWell(
+                  return GestureDetector(
 
                     onTap: (){
                       if(_formKey.currentState!.validate()){

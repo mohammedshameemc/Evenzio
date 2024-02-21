@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'decoration.dart';
-import 'home.dart';
+import 'getstartscreen.dart';
 import 'menu.dart';
 
 class home1 extends StatefulWidget {

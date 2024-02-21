@@ -799,7 +799,7 @@ String productSelectedCategoryID ="";
 
   
    
-  Future<void> addOrder(String userid ,List itemid, ) async
+  Future<void> addOrder(String userid ,List itemid,) async
   {
     String id = DateTime.now().millisecondsSinceEpoch.toString();
     HashMap<String, Object> orderMap = HashMap();
@@ -817,6 +817,19 @@ String productSelectedCategoryID ="";
 
 
     db.collection("ORDER_DETAILS").doc(id).set(orderMap);
+    db.collection("FAVORITE").where("USER_ID",isEqualTo: userid).get().then((value) {
+      if(value.docs.isNotEmpty){
+        for(var element in value.docs){
+          print("hajjajsjjs"+element.id);
+         db.collection("FAVORITE").doc(element.id).delete();
+          favoriteList.clear();
+
+        }
+      }
+
+
+    });
+
     notifyListeners();
   }
 
@@ -955,48 +968,48 @@ String productSelectedCategoryID ="";
             notifyListeners();
           }
           print("gfvhewvkjwehfvhe"+itemIdList.toString());
+          db.collection("ITEM").where("ITEM_ID",whereIn:itemIdList).get().then((val){
+            if(val.docs.isNotEmpty){
+              for(var elem in val.docs){
+                print("jhvbjnvbnvf"+name.toString());
 
-          // print(productid=ordermap["PRODUCT_ID"]+"fkkf");
-          orderList.add(orderdetails(
-              name,
-              photo,
-              rate,
-              ordermap["NAME"].toString(),
-              ordermap["TIME"].toString(),
-              ordermap["DATE"].toString(),
-              // DateFormat("hh:mm a").format(ordermap["TIME"].toDate()).toString(),
-              // DateFormat("dd-MM-yyyy").format(ordermap["DATE"].toDate()).toString(),
-              ordermap["TYPE"].toString(),
-              ordermap["GUST"],
-              ordermap["ADDRESS"].toString(),
-              ordermap["ORDER_ID"].toString(),
+                photo = elem.get("PHOTO").toString();
+                name = elem.get("NAME").toString();
+                rate = elem.get("RATE").toString();
+                orderList.add(orderdetails(
+                    name,
+                    photo,
+                    rate,
+                    ordermap["NAME"].toString(),
+                    ordermap["TIME"].toString(),
+                    ordermap["DATE"].toString(),
+                    // DateFormat("hh:mm a").format(ordermap["TIME"].toDate()).toString(),
+                    // DateFormat("dd-MM-yyyy").format(ordermap["DATE"].toDate()).toString(),
+                    ordermap["TYPE"].toString(),
+                    ordermap["GUST"],
+                    ordermap["ADDRESS"].toString(),
+                    ordermap["ORDER_ID"].toString(),
 
-              ordermap["STATUS"].toString()));
-          notifyListeners();
-          // db
-          //     .collection("ITEM")
-          //     .where("ITEM_ID", whereIn: itemIdList)
-          //     .get()
-          //     .then((val) {
-          //   if (val.docs.isNotEmpty) {
-          //     for (var elem in val.docs) {
-          //       name = elem.get("NAME").toString();
-          //       photo = elem.get("PHOTO").toString();
-          //       rate = elem.get("RATE").toString();
-          //
-          //     }
-          //   }
-          // });
+                    ordermap["STATUS"].toString()));
+                notifyListeners();
+
+              }
+            }
+
+          });
+          
           notifyListeners();
         }
       }
       });
     }
   void getadminorderdetils() {
+
     List<String> itemIdList = [];
     String name = '';
     String photo = '';
     String rate = '';
+    orderList.clear();
 
 
     db.collection("ORDER_DETAILS").get().then((value) {
@@ -1004,47 +1017,45 @@ String productSelectedCategoryID ="";
       print("hnjm bhbh");
       if (value.docs.isNotEmpty) {
 
-        orderList.clear();
+
         for (var elements in value.docs) {
           Map<String, dynamic> ordermap = elements.data();
           // productid=ordermap["PRODUCT_ID"];
           for (var kk in ordermap["ITEM_ID"]) {
-            // print(kk.toString() + "gkkg");
-            // print(kk.toString() + "cmmc");
+
             itemIdList.add(kk);
             notifyListeners();
           }
           print("gfvhewvkjwehfvhe"+itemIdList.toString());
+          db.collection("ITEM").where("ITEM_ID",whereIn:itemIdList).get().then((val){
+            if(val.docs.isNotEmpty){
 
-          // print(productid=ordermap["PRODUCT_ID"]+"fkkf");
-          orderList.add(orderdetails(
-              name,
-              photo,
-              rate,
-              ordermap["NAME"].toString(),
-              ordermap["TIME"].toString(),
-              ordermap["DATE"].toString(),
+              for(var elem in val.docs){
+                print("jhvbjnvbnvf"+name.toString());
 
-              ordermap["TYPE"].toString(),
-              ordermap["GUST"].toString(),
-              ordermap["ADDRESS"].toString(),
-              ordermap["ORDER_ID"].toString(),
-
-              ordermap["STATUS"].toString()));
-          notifyListeners();
-          db
-              .collection("ITEM")
-              .where("ITEM_ID", whereIn: itemIdList)
-              .get()
-              .then((val) {
-            if (val.docs.isNotEmpty) {
-              for (var elem in val.docs) {
-                name = elem.get("NAME").toString();
                 photo = elem.get("PHOTO").toString();
+                name = elem.get("NAME").toString();
                 rate = elem.get("RATE").toString();
+                orderList.add(orderdetails(
+                    name,
+                    photo,
+                    rate,
+                    ordermap["NAME"].toString(),
+                    ordermap["TIME"].toString(),
+                    ordermap["DATE"].toString(),
+                    // DateFormat("hh:mm a").format(ordermap["TIME"].toDate()).toString(),
+                    // DateFormat("dd-MM-yyyy").format(ordermap["DATE"].toDate()).toString(),
+                    ordermap["TYPE"].toString(),
+                    ordermap["GUST"],
+                    ordermap["ADDRESS"].toString(),
+                    ordermap["ORDER_ID"].toString(),
+
+                    ordermap["STATUS"].toString()));
+                notifyListeners();
 
               }
             }
+
           });
           notifyListeners();
         }
@@ -1209,6 +1220,7 @@ String productSelectedCategoryID ="";
     favoriteMap["PHOTO"] = favPhoto;
     favoriteMap["NAME"] = favName;
     favoriteMap["RATE"] = faveRate;
+    favoriteMap["FAVORITE_ID"] = id;
 
     db.collection("FAVORITE").doc(id).set(favoriteMap);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -1247,28 +1259,28 @@ String productSelectedCategoryID ="";
       notifyListeners();
     });
   }
-  void getAdminFavorite(String userid){
-    db.collection("FAVORITE").get().then((value) {
-      if (value.docs.isNotEmpty) {
-        favoriteList.clear();
-        for (var value in value.docs) {
-          favoriteList.add(favoriteModels(
-              value.get("USER_ID").toString(),
-              value.get("ITEM_ID").toString(),
-              value.get("PHOTO").toString(),
-              value.get("NAME").toString(),
-              value.get("RATE").toString(),
-              value.id
-
-
-
-          ));
-          notifyListeners();
-        }
-      }
-      notifyListeners();
-    });
-  }
+  // void getAdminFavorite(String userid){
+  //   db.collection("FAVORITE").get().then((value) {
+  //     if (value.docs.isNotEmpty) {
+  //       favoriteList.clear();
+  //       for (var value in value.docs) {
+  //         favoriteList.add(favoriteModels(
+  //             value.get("USER_ID").toString(),
+  //             value.get("ITEM_ID").toString(),
+  //             value.get("PHOTO").toString(),
+  //             value.get("NAME").toString(),
+  //             value.get("RATE").toString(),
+  //             value.id
+  //
+  //
+  //
+  //         ));
+  //         notifyListeners();
+  //       }
+  //     }
+  //     notifyListeners();
+  //   });
+  // }
   void removeFavorite(selectedid, BuildContext context,String userid) {
     db.collection("FAVORITE").doc(selectedid).delete();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -1279,16 +1291,16 @@ String productSelectedCategoryID ="";
     getUserFavorite(userid);
     notifyListeners();
   }
-  void deletefavourate( itemid, BuildContext context,String userid) {
-    db.collection("FAVORITE").doc(itemid).delete();
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Remove in Favorite",style: TextStyle(color:maincolor, fontStyle: FontStyle.italic),),
-      backgroundColor: Colors.white,
-    )
-    );
-    getUserFavorite(userid);
-    notifyListeners();
-  }
+  // void deletefavouratelist( itemid, BuildContext context,) {
+  //   db.collection("FAVORITE").doc(itemid).delete();
+  //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //     content: Text("Remove in Favorite",style: TextStyle(color:maincolor, fontStyle: FontStyle.italic),),
+  //     backgroundColor: Colors.white,
+  //   )
+  //   );
+  //   // getUserFavorite(userid);
+  //   notifyListeners();
+  // }
 // void removeAllFavorite(itemid){
 //     db.collection("FAVORITE").doc(itemid).delete();
 // date picker
