@@ -30,27 +30,42 @@ class AdminHome extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return  Scaffold(
       backgroundColor: bg,
-      appBar: AppBar(automaticallyImplyLeading: false,
-        backgroundColor: maincolor,
-
-
-
-        leading: IconButton(
-          onPressed: () {
-            back(context);
-
-
-          },
-          icon: Icon(Icons.arrow_back_ios_new,color: Colors.white),
-        ),
-
-      ),
+      // appBar: AppBar(automaticallyImplyLeading: false,
+      //   backgroundColor: maincolor,
+      //
+      //
+      //
+      //   leading: IconButton(
+      //     onPressed: () {
+      //       back(context);
+      //
+      //
+      //     },
+      //     icon: Icon(Icons.arrow_back_ios_new,color: Colors.white),
+      //   ),
+      //
+      // ),
       body:
       Consumer<MainProvider>(
         builder: (context,value,child) {
           return SingleChildScrollView(
-            child: Column(mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+
+              mainAxisAlignment: MainAxisAlignment.center,
     children: [
+      ClipPath(
+        clipper: CustomShape(),
+        child: Container(
+          color: Colors.white,
+          height: 200,
+          child: AppBar(
+            elevation: 0,
+            scrolledUnderElevation: 0,
+
+
+          ),
+        ),
+      ),
     InkWell(onTap: () {
       value.getadminorderdetils();
 

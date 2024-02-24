@@ -32,14 +32,8 @@ class profile extends StatelessWidget {
       decoration: bgImg(),
       child: Scaffold(
         backgroundColor: tranceparent,
-        appBar: AppBar(backgroundColor: maincolor, leading: IconButton(
-          onPressed: () {
-            back(context);
 
 
-          },
-          icon: Icon(Icons.arrow_back_ios_new,color: Colors.white),
-        ),),
         // appBar: AppBar(
         //
         //   leading: Padding(
@@ -94,26 +88,53 @@ class profile extends StatelessWidget {
         // ),
         body: SingleChildScrollView(
           child: Column(
-            children: [SizedBox(
-              height: 20,
-            ),
-              Consumer<MainProvider>(builder: (context, value, child) {
-                        return value.photo != ''
-                            ? CircleAvatar(
-                                backgroundImage: NetworkImage(value.photo),
-                                radius: 45,
-                                backgroundColor: Color(0xffD9D9D9),
-                              )
-                            : CircleAvatar(
-                                radius: 45,
-                                backgroundColor: Color(0xffD9D9D9),
-                                child: Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                  size: 60,
-                                ),
-                              );
-                      }),
+            children:
+            [
+              Stack(
+                children:[ ClipPath(
+                  clipper: CustomShape(),
+                  child: Container(
+                    color: Colors.white,
+                    height: 200,
+                    child: AppBar(
+                      elevation: 0,
+                      scrolledUnderElevation: 0,
+                      automaticallyImplyLeading: false,
+                      backgroundColor: maincolor,
+                      leading: InkWell(onTap: () {
+                        back(context);
+                      },child: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.white,)),
+
+
+
+                    ),
+                  ),
+                ),
+                  Positioned(left: width/2.5,
+                    top: height/6.5,
+                    child: Consumer<MainProvider>(builder: (context, value, child) {
+                      return value.photo != ''
+                          ? CircleAvatar(
+                        backgroundImage: NetworkImage(value.photo),
+                        radius: 45,
+                        backgroundColor: Color(0xffD9D9D9),
+                      )
+                          : CircleAvatar(
+                        radius: 45,
+                        backgroundColor: Color(0xffD9D9D9),
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.white,
+                          size: 60,
+                        ),
+                      );
+                    }),
+                  ),
+
+                ],
+
+              ),
+
             Consumer<MainProvider>(builder: (context, value, child) {
                 return Center(child: text1(24, value.name));
               }),
@@ -336,3 +357,24 @@ class profile extends StatelessWidget {
     );
   }
 }
+// class CustomShape extends CustomClipper<Path> {
+//   @override
+//   getClip(Size size) {
+//     double height = size.height;
+//     double width = size.width;
+//     var path = Path();
+//     path.lineTo(0, height - 100);
+//     path.quadraticBezierTo(width / 2, height, width, height - 100);
+//     path.lineTo(width, 0);
+//     path.close();
+//
+//     return path;
+//   }
+//
+//   @override
+//   bool shouldReclip(covariant oldClipper) {
+//     return true;
+//   }
+//
+//
+// }
