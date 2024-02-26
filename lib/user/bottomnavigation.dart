@@ -51,7 +51,9 @@ class _bottamNavigationState extends State<bottamNavigation> {
         extendBody: true,
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          // margin: EdgeInsets.zero,marginR: EdgeInsets.zero,paddingR: EdgeInsets.zero,
+          // margin: EdgeInsets.zero,
+          // marginR: EdgeInsets.zero,
+          // paddingR: EdgeInsets.zero,
           // enableFloatingNavBar: true,
           selectedItemColor: Colors.white30,
           unselectedItemColor: Colors.white,

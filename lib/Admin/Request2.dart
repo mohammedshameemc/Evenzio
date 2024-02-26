@@ -93,6 +93,8 @@ class Request2 extends StatelessWidget {
                 itemCount:value.orderList.length,
                 itemBuilder: (context, index, realIndex) {
                   var item= value.orderList[index];
+                  print("jhfbvjhfbvjhfv"+value.orderList[index].itemname.toString());
+
 
                   return Container(
                     margin:EdgeInsets.all(5),height: height,width: width,
@@ -103,7 +105,7 @@ class Request2 extends StatelessWidget {
                         boxShadow: [BoxShadow(spreadRadius: 2,blurRadius: 2,color: Colors.grey),],
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(item.itemphoto))),
+                            image: NetworkImage(value.orderList[index].itemphoto))),
                     child:  Padding(
                       padding:  EdgeInsets.only(top: 150),
                       child: Container(height:50 ,width: 180,decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color:Colors.white),
@@ -112,9 +114,10 @@ class Request2 extends StatelessWidget {
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(item.itemname,style: GoogleFonts.inknutAntiqua(fontSize:11,fontWeight: FontWeight.w700,color: Colors.black),),
+                                  Text(value.orderList[index].itemname,style: GoogleFonts.inknutAntiqua(fontSize:11,fontWeight: FontWeight.w700,color: Colors.black),),
 
-                                  Text(item.itemrate)
+                                  Text(value.orderList[index].
+                                  itemrate)
                                 ],
                               ),
                               SizedBox(width: 5,),

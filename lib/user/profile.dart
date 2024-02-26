@@ -33,7 +33,6 @@ class profile extends StatelessWidget {
       child: Scaffold(
         backgroundColor: tranceparent,
 
-
         // appBar: AppBar(
         //
         //   leading: Padding(

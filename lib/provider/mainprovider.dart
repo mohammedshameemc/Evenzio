@@ -976,24 +976,25 @@ String productSelectedCategoryID ="";
                 photo = elem.get("PHOTO").toString();
                 name = elem.get("NAME").toString();
                 rate = elem.get("RATE").toString();
-                orderList.add(orderdetails(
-                    name,
-                    photo,
-                    rate,
-                    ordermap["NAME"].toString(),
-                    ordermap["TIME"].toString(),
-                    ordermap["DATE"].toString(),
-                    // DateFormat("hh:mm a").format(ordermap["TIME"].toDate()).toString(),
-                    // DateFormat("dd-MM-yyyy").format(ordermap["DATE"].toDate()).toString(),
-                    ordermap["TYPE"].toString(),
-                    ordermap["GUST"],
-                    ordermap["ADDRESS"].toString(),
-                    ordermap["ORDER_ID"].toString(),
-
-                    ordermap["STATUS"].toString()));
-                notifyListeners();
 
               }
+              orderList.add(orderdetails(
+                  name,
+                  photo,
+                  rate,
+                  ordermap["NAME"].toString(),
+                  ordermap["TIME"].toString(),
+                  ordermap["DATE"].toString(),
+                  // DateFormat("hh:mm a").format(ordermap["TIME"].toDate()).toString(),
+                  // DateFormat("dd-MM-yyyy").format(ordermap["DATE"].toDate()).toString(),
+                  ordermap["TYPE"].toString(),
+                  ordermap["GUST"],
+                  ordermap["ADDRESS"].toString(),
+                  ordermap["ORDER_ID"].toString(),
+
+                  ordermap["STATUS"].toString()));
+              notifyListeners();
+
             }
 
           });
@@ -1031,7 +1032,7 @@ String productSelectedCategoryID ="";
             if(val.docs.isNotEmpty){
 
               for(var elem in val.docs){
-                print("jhvbjnvbnvf"+name.toString());
+                print("jhvbjnvbnvf"+name.toString()+itemid.toString());
 
                 photo = elem.get("PHOTO").toString();
                 name = elem.get("NAME").toString();

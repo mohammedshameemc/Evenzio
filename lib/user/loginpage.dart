@@ -4,6 +4,7 @@ import 'package:firstproject/provider/loginProvider.dart';
 import 'package:firstproject/provider/mainprovider.dart';
 import 'package:firstproject/user/registration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +48,8 @@ class loginpage extends StatelessWidget {
                         height: 64,margin: EdgeInsets.symmetric(horizontal: 50),
                         width: width,
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: tranceparent),
-                        child: TextFormField(validator:(value) {
+                        child: TextFormField(inputFormatters: [LengthLimitingTextInputFormatter(10)],
+                          validator:(value) {
                           if(value==null||value.isEmpty){return "*Required ";}
                           return  null;
                           },keyboardType: TextInputType.number,
