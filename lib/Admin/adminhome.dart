@@ -61,7 +61,8 @@ class AdminHome extends StatelessWidget {
           child: AppBar(
             elevation: 0,
             scrolledUnderElevation: 0,
-
+backgroundColor: maincolor,
+            automaticallyImplyLeading: false,
 
           ),
         ),
@@ -80,7 +81,7 @@ class AdminHome extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    text2(18, "Request"),
+                    text2(16, "Request"),
                     Icon(Icons.arrow_forward_ios_outlined,color: Colors.white),
 
                   ],
@@ -101,7 +102,7 @@ class AdminHome extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  text2(18, "Main Catogary"),
+                  text2(16, "Main Catogary"),
                   Consumer<MainProvider>(
                       builder: (context,value,child) {
                         value.getItem();
@@ -127,7 +128,7 @@ class AdminHome extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      text2(18, "Add Catogary"),
+                      text2(16, "Add Catogary"),
     Consumer<MainProvider>(
               builder: (context,value,child) {
                 value.getCategory();
@@ -153,7 +154,7 @@ class AdminHome extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      text2(18, "Add item"),
+                      text2(16, "Add item"),
     Consumer<MainProvider>(
               builder: (context,value,child) {
                 value.getItem();
@@ -182,7 +183,7 @@ class AdminHome extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      text2(18, "Report a problem"),
+                      text2(16, "Report a problem"),
      Icon(Icons.arrow_forward_ios_outlined,color: Colors.white),
 
     ],
@@ -227,10 +228,10 @@ class AdminHome extends StatelessWidget {
               },
               child: Container(margin: EdgeInsets.all(20),height: height/11,width:width,
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-                  color: color3,),
+                  color: color2,),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Center(child: text2(18, "Log Out")),
+                  child: Center(child: text2(16, "Log Out")),
                 ),
               ),
             ),

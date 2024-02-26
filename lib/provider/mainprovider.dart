@@ -1027,12 +1027,12 @@ String productSelectedCategoryID ="";
             itemIdList.add(kk);
             notifyListeners();
           }
-          print("gfvhewvkjwehfvhe"+itemIdList.toString());
+          // print("gfvhewvkjwehfvhe"+itemIdList.toString());
           db.collection("ITEM").where("ITEM_ID",whereIn:itemIdList).get().then((val){
             if(val.docs.isNotEmpty){
 
               for(var elem in val.docs){
-                print("jhvbjnvbnvf"+name.toString()+itemid.toString());
+                // print("jhvbjnvbnvf"+name.toString()+itemid.toString());
 
                 photo = elem.get("PHOTO").toString();
                 name = elem.get("NAME").toString();

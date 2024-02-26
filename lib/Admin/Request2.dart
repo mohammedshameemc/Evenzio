@@ -89,57 +89,59 @@ class Request2 extends StatelessWidget {
         child: Consumer<MainProvider>(builder: (context, value, child) {
           return Column(
             children: [
-              CarouselSlider.builder(
-                itemCount:value.orderList.length,
-                itemBuilder: (context, index, realIndex) {
-                  var item= value.orderList[index];
-                  print("jhfbvjhfbvjhfv"+value.orderList[index].itemname.toString());
+              SizedBox(
+                child: CarouselSlider.builder(
+                  itemCount:value.orderList.length,
+                  itemBuilder: (context, index, realIndex) {
+                    var item= value.orderList[index];
+                    // print("jhfbvjhfbvjhfv"+value.orderList[index].itemname.toString());
 
 
-                  return Container(
-                    margin:EdgeInsets.all(5),height: height,width: width,
-                    decoration: BoxDecoration(
+                    return Container(
+                      margin:EdgeInsets.all(5),height: height,width: width,
+                      decoration: BoxDecoration(
 
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [BoxShadow(spreadRadius: 2,blurRadius: 2,color: Colors.grey),],
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(value.orderList[index].itemphoto))),
-                    child:  Padding(
-                      padding:  EdgeInsets.only(top: 150),
-                      child: Container(height:50 ,width: 180,decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color:Colors.white),
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(value.orderList[index].itemname,style: GoogleFonts.inknutAntiqua(fontSize:11,fontWeight: FontWeight.w700,color: Colors.black),),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [BoxShadow(spreadRadius: 2,blurRadius: 2,color: Colors.grey),],
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(item.itemphoto))),
+                      child:  Padding(
+                        padding:  EdgeInsets.only(top: 150),
+                        child: Container(height:50 ,width: 180,decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color:Colors.white),
+                            child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(item.itemname,style: GoogleFonts.inknutAntiqua(fontSize:11,fontWeight: FontWeight.w700,color: Colors.black),),
 
-                                  Text(value.orderList[index].
-                                  itemrate)
-                                ],
-                              ),
-                              SizedBox(width: 5,),
-                              Icon(Icons.favorite,color: Color(0xfffFF6464),size: 30,)
-                            ],
-                          )),
-                    ),
-                  );
-                },
-                options: CarouselOptions(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    height: 250,
-                    viewportFraction: 1 /2,
-                    autoPlay: true,
-                    pageSnapping: true,
-                    enlargeStrategy: CenterPageEnlargeStrategy.height,
-                    enlargeCenterPage: true,
-                    autoPlayInterval: const Duration(seconds: 4),
-                    onPageChanged: (index, reason) {
-                      value.activeIndex(index);
-                      // print("activvgvg"+Activeindex.toString());
-                    }),
+                                    Text(item.
+                                    itemrate)
+                                  ],
+                                ),
+                                SizedBox(width: 5,),
+                                Icon(Icons.favorite,color: Color(0xfffFF6464),size: 30,)
+                              ],
+                            )),
+                      ),
+                    );
+                  },
+                  options: CarouselOptions(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      height: height/2.7,
+                      viewportFraction: 1 /2,
+                      autoPlay: false,
+                      pageSnapping: true,
+                      enlargeStrategy: CenterPageEnlargeStrategy.height,
+                      enlargeCenterPage: true,
+                      autoPlayInterval: const Duration(seconds: 4),
+                      onPageChanged: (index, reason) {
+                        value.activeIndex(index);
+                        // print("activvgvg"+Activeindex.toString());
+                      }),
+                ),
               ),
               SizedBox(height: 20,),
              

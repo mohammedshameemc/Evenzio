@@ -44,11 +44,11 @@ class otp extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,keyboardType: TextInputType.number,
                       defaultPinTheme: PinTheme(
                           textStyle:
-                          TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
-                          height: 50,
-                          width: 50,
+                          TextStyle(fontWeight: FontWeight.bold,color: Colors.grey),
+                          height: 55,
+                          width: 40,
                           decoration: BoxDecoration( boxShadow: [
-                            BoxShadow(
+                            BoxShadow(color: Colors.white30,
 
                               blurRadius: 2.0, // soften the shadow
                               spreadRadius: 1.0, //extend the shadow
@@ -66,7 +66,6 @@ class otp extends StatelessWidget {
               ),
             ),
             SizedBox(height: height/10,),
-            Center(child: Text("Resend OTP in: 20 sec",style: TextStyle(fontSize: 16,fontWeight: FontWeight.normal,color: Colors.grey.shade400),)),
             SizedBox(height: height/10,),
 
             Consumer<loginProvider>(
