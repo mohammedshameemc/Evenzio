@@ -73,7 +73,8 @@ class loginpage extends StatelessWidget {
                   return GestureDetector(
 
                     onTap: (){
-                      if(_formKey.currentState!.validate()){
+                      if(_formKey.currentState!.validate()
+                      ){
                         value.sendotp(context);
 
                       }
