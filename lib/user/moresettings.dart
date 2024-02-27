@@ -25,7 +25,8 @@ class settings extends StatelessWidget {
         backgroundColor: tranceparent,
         appBar: AppBar(automaticallyImplyLeading: false,
             backgroundColor: maincolor,
-            title: Center(child: text1(24, "More Settings")),
+            title: text1(24, "More Settings"),
+            centerTitle: true,
 
 
             leading: IconButton(
@@ -113,7 +114,9 @@ callNext(context, About());
 
                                                       decoration: BoxDecoration(color: Colors.white.withOpacity(0.5),
                                                           borderRadius: BorderRadius.circular(10)),
-                                                      child: TextField(maxLines: 3,
+                                                      child: TextField(
+                                                        style: TextStyle(fontWeight:FontWeight.bold,color: Colors.white ),
+                                                        maxLines: 3,
                                                         controller: value.problemcontroller,
                                                         decoration: InputDecoration(hintText: "Write a something",
                                                             hintStyle: TextStyle(

@@ -287,7 +287,7 @@ class details extends StatelessWidget {
 
 
                              },
-                                 child: text2(16, "Confirm"))),
+                                 child: text2(14, "Confirm"))),
 
                               )
 

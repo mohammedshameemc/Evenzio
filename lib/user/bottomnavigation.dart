@@ -55,7 +55,7 @@ class _bottamNavigationState extends State<bottamNavigation> {
           // marginR: EdgeInsets.zero,
           // paddingR: EdgeInsets.zero,
           // enableFloatingNavBar: true,
-          selectedItemColor: Colors.white30,
+          selectedItemColor: Colors.black,
           unselectedItemColor: Colors.white,
           backgroundColor: maincolor,
           currentIndex: selectedIndex,

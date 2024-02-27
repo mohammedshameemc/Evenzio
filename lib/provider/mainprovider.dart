@@ -1130,7 +1130,8 @@ String productSelectedCategoryID ="";
               value.get("REVIEW").toString(),
               value.get("RATING").toString(),
               value.id,
-              value.get("USER_NAME").toString()
+              value.get("USER_NAME").toString(),
+              value.get("USER_ID").toString()
 
           ));
           notifyListeners();
@@ -1157,6 +1158,16 @@ String productSelectedCategoryID ="";
 
     }
     );
+  }
+  void deletereview(String selectid,String userid, BuildContext context) {
+    db.collection("REVIEWS").doc(selectid).delete();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Deleted successfully"),
+      backgroundColor: maincolor,
+    )
+    );
+    getReviews();
+    notifyListeners();
   }
 
 

@@ -98,7 +98,7 @@ body:  Column( crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(item.name,style: GoogleFonts.inknutAntiqua(fontSize:12,fontWeight: FontWeight.w700,color: Colors.black),),
 
-                                    Text("RS${item.price}")
+                                    Text("${item.price}")
                                   ],
                                 ),
                                 // SizedBox(width: 20,),
