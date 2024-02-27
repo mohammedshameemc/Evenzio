@@ -27,10 +27,10 @@ class menu extends StatelessWidget {
       decoration: bgImg(),
       child: Scaffold(
         backgroundColor: tranceparent,
-        appBar: AppBar(
+        appBar: AppBar(centerTitle: true,
             automaticallyImplyLeading: false,
             backgroundColor: maincolor,
-            title: Center(child: text1(24, mainhead)),
+            title: text1(22, mainhead),
             leading: IconButton(
               onPressed: () {
                 back(context);

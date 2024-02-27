@@ -37,7 +37,7 @@ class loginpage extends StatelessWidget {
                 ,
                 child: Image.asset("assets/spoon.png"),
               ),
-              text1(24, "Login"),
+              text1(22, "Login"),
               SizedBox(
                 height: 150,
               ),

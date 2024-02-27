@@ -121,7 +121,10 @@ class favorite extends StatelessWidget {
                       }),
                 ),
               ],
-            ):Center(child: const Text(" Your Favorite is Empty....",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),));
+            ):Center(child: text2(13, "Your Favorite is Empty....")
+            // Text(" Your Favorite is Empty....",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
+            // )
+            );
           }
         ),
 

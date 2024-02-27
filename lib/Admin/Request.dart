@@ -21,7 +21,9 @@ class Request extends StatelessWidget {
     return  Scaffold(
 
         backgroundColor: bg,
-      appBar: AppBar(automaticallyImplyLeading: false,
+      appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         backgroundColor: maincolor,
         title: text1(22, "Request"),
 

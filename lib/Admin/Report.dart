@@ -16,7 +16,7 @@ class Report extends StatelessWidget {
       backgroundColor: bg,
 
       appBar: AppBar(automaticallyImplyLeading: false,
-
+       centerTitle: true,
         title: text1(20, "Report Problem"),
         backgroundColor: maincolor,
 
