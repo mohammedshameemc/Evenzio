@@ -22,6 +22,7 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -172,3 +173,4 @@ buildIndiCator(int count, BuildContext context, int activeindex) {
           ),
       );
 }
+

@@ -1103,7 +1103,7 @@ String productSelectedCategoryID ="";
 
     db.collection("ORDER_DETAILS").doc(id).update(Acceptmap);
 
-    print("mnfffjknjnjnfff"+fcmid);
+    // print("mnfffjknjnjnfff"+fcmid);
     print("hshssh"+ Acceptmap["NAME"].toString());
 
     callOnFcmApiSendPushNotifications(
