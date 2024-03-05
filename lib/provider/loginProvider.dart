@@ -2,17 +2,20 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firstproject/constance/colors.dart';
+import 'package:firstproject/provider/mainprovider.dart';
 import 'package:firstproject/user/getstartscreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../Admin/adminhome.dart';
 import '../constance/callfunctions.dart';
 import '../user/otp.dart';
 
-class loginProvider extends ChangeNotifier {
+class LoginProvider extends ChangeNotifier {
 
 
   String VerificationId = '';
@@ -68,11 +71,14 @@ class loginProvider extends ChangeNotifier {
   }
 
   void userAuthorisation(String? phone,BuildContext context,){
+    MainProvider mainProvider = Provider.of<MainProvider>(context,listen:false);
+
     String loginType='';
     String name='';
     String loginphone='';
     String userId='';
-    db.collection("USER").where("PHONE",isEqualTo: phone).get().then((value){
+    String fcmid='';
+    db.collection("USER").where("PHONE",isEqualTo: phone).get().then((value) async {
       if(value.docs.isNotEmpty){
         for(var e in value.docs){
           Map<dynamic, dynamic> map = e.data();
@@ -81,9 +87,27 @@ class loginProvider extends ChangeNotifier {
           loginphone= map["PHONE"].toString();
           userId = map["USER_ID"].toString();
 
+
+
           if(loginType == "ADMIN"){
+            await mainProvider.getAdminFcmId();
+
+            FirebaseMessaging.instance.getToken().then((fcmValue) {
+              db.collection("USER").doc(userId).set(
+                  {'FCM_ID': fcmValue.toString()}, SetOptions(merge: true));
+              notifyListeners();
+            });
             callNextReplacement(context,AdminHome());
+
           }else{
+            print("sbdjsdbjsd"+userId.toString());
+            FirebaseMessaging.instance.getToken().then((fcmValue) {
+              db.collection("USER").doc(userId).set(
+                  {'FCM_ID': fcmValue.toString()}, SetOptions(merge: true));
+              print("hbgfcfgvhb");
+            });
+            await mainProvider.getUserFcmId();
+            notifyListeners();
 
             callNextReplacement(context, home(userId: userId,userName: name,));
           }
@@ -96,5 +120,7 @@ void clearLogin(){
     phoneController.clear();
     otpController.clear();
 
-}
+  }
+
+
 }

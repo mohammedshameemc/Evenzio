@@ -35,7 +35,7 @@ class otp extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.all(15),
-              child: Consumer<loginProvider>(
+              child: Consumer<LoginProvider>(
                 builder: (context,value,child) {
                   return Pinput(
                     controller: value.otpController,
@@ -68,7 +68,7 @@ class otp extends StatelessWidget {
             SizedBox(height: height/10,),
             SizedBox(height: height/10,),
 
-            Consumer<loginProvider>(
+            Consumer<LoginProvider>(
               builder: (context,value,child) {
 
                 return InkWell(onTap: () {

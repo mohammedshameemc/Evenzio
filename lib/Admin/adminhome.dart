@@ -205,7 +205,7 @@ backgroundColor: maincolor,
                         (fontSize:16,fontWeight: FontWeight.w700,color: red,),
 
                       )),
-                        Consumer<loginProvider>(
+                        Consumer<LoginProvider>(
                           builder: (context,value,child) {
                             return TextButton(onPressed: (){
 

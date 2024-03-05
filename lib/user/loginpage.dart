@@ -41,7 +41,7 @@ class loginpage extends StatelessWidget {
               SizedBox(
                 height: 150,
               ),
-              Consumer<loginProvider>(
+              Consumer<LoginProvider>(
                 builder: (context,value,child) {
                   return Form(key: _formKey,
                     child: Container(
@@ -68,7 +68,7 @@ class loginpage extends StatelessWidget {
                 }
               ),
               SizedBox(height: 30,),
-              Consumer<loginProvider>(
+              Consumer<LoginProvider>(
                 builder: (context,value,child) {
                   return GestureDetector(
 

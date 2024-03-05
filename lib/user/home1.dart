@@ -32,7 +32,8 @@ class _home1State extends State<home1> {
       decoration: bgImg(),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(automaticallyImplyLeading: false,
+        appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: maincolor,
             leading: IconButton(
               onPressed: () {

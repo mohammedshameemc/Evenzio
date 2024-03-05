@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/loginProvider.dart';
+import '../provider/loginProvider.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -21,8 +22,8 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   void initState() {
-    loginProvider LoginProvider =
-    Provider.of<loginProvider>(context,listen:false);
+    LoginProvider Loginprovider =
+    Provider.of<LoginProvider>(context,listen:false);
 
     FirebaseAuth auth = FirebaseAuth.instance;
     var loginUser = auth.currentUser;
@@ -37,7 +38,7 @@ class _SplashState extends State<Splash> {
         callNextReplacement(context, loginpage());
       }
       else {
-        LoginProvider.userAuthorisation(loginUser.phoneNumber, context);
+        Loginprovider.userAuthorisation(loginUser.phoneNumber, context);
       }
     });
     super.initState();

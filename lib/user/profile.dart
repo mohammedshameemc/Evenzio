@@ -265,7 +265,7 @@ class profile extends StatelessWidget {
                                                     color: red,
                                                   ),
                                                 )),
-                                            Consumer<loginProvider>(
+                                            Consumer<LoginProvider>(
                                                 builder: (context, value, child) {
                                               return TextButton(
                                                   onPressed: () {

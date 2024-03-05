@@ -1,5 +1,7 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart'as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,10 +11,13 @@ import 'package:firstproject/Modules/mainCategoryModel.dart';
 import 'package:firstproject/Modules/usersmodel.dart';
 import 'package:firstproject/constance/callfunctions.dart';
 import 'package:firstproject/constance/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart'as http;
+import 'package:provider/provider.dart';
 
 
 import '../Modules/appointmentModel.dart';
@@ -20,10 +25,13 @@ import '../Modules/categorymodel.dart';
 import '../Modules/itemModel.dart';
 import '../Modules/problemmodel.dart';
 import '../Modules/reviewmodel.dart';
+import 'loginProvider.dart';
+
 
 
 
 class MainProvider extends ChangeNotifier {
+
 
   final FirebaseFirestore db = FirebaseFirestore.instance;
   firebase_storage.Reference ref = FirebaseStorage.instance.ref("Images");
@@ -797,10 +805,10 @@ String productSelectedCategoryID ="";
 
 
 
-  
-   
-  Future<void> addOrder(String userid ,List itemid,) async
+
+  Future<void> addOrder(String userid ,List itemid,BuildContext context) async
   {
+
     String id = DateTime.now().millisecondsSinceEpoch.toString();
     HashMap<String, Object> orderMap = HashMap();
     // HashMap<String, Object> orderitemMap = HashMap();
@@ -826,9 +834,17 @@ String productSelectedCategoryID ="";
 
         }
       }
-
-
     });
+    print("adminmnffffff"+fcmid);
+    print("hshssh"+ orderMap["NAME"].toString());
+    callOnFcmApiSendPushNotifications(
+      title: "order",
+      body: orderMap["NAME"].toString()+"REQUESTED ORDER",
+      fcmId:"fD9UmRu2SaeRewttQ_U97z:APA91bH4whcuTzU7PsnMsXDPrEloe_iOggAnXVY7ZdhgpS7rzJKTuQJtVBprzzIK5Im-TlUFO9IRL_7yancUW0XooLDk3ACqSV-QxyJ4N3xHuZXVgeW-l32sD-u22pIpCeaCc9Eum3WG",
+      imageLink: "",
+
+    );
+  print("sxvsanxcv");
 
     notifyListeners();
   }
@@ -1079,12 +1095,26 @@ String productSelectedCategoryID ="";
     orderAddresscontroller.clear();
   }
 
+
   void acceptStatusUpdate(String id) {
     HashMap<String, Object> Acceptmap = HashMap();
     Acceptmap["STATUS"] = "Accepted";
     Acceptmap["ACCEPTED_TIME"] = DateTime.now();
 
     db.collection("ORDER_DETAILS").doc(id).update(Acceptmap);
+
+    print("mnfffjknjnjnfff"+fcmid);
+    print("hshssh"+ Acceptmap["NAME"].toString());
+
+    callOnFcmApiSendPushNotifications(
+      title: "your order is accepted",
+      body: Acceptmap["NAME"].toString()+"REQUESTED",
+      fcmId:fcmid,
+      imageLink: "",
+    );
+
+    print("sxvsanxcv");
+
     notifyListeners();
 
   }
@@ -1094,6 +1124,20 @@ String productSelectedCategoryID ="";
     RejectMap["STATUS"] = "Rejected";
     RejectMap["REJECTED_TIME"] = DateTime.now();
     db.collection("ORDER_DETAILS").doc(id).update(RejectMap);
+    
+    print("hnnuinuinuinhui"+fcmid);
+    print("hshssh"+ RejectMap["NAME"].toString());
+
+    callOnFcmApiSendPushNotifications(
+      title: "add order",
+      body: RejectMap["NAME"].toString()+"REQUESTED",
+      fcmId:fcmid,
+      imageLink: "",
+
+    );
+    print("sxvsanxcv");
+
+    notifyListeners();
     notifyListeners();
 
 
@@ -1402,6 +1446,198 @@ String productSelectedCategoryID ="";
 
       problemcontroller.clear();
    }
+
+  List<String> adminFcmList = [];
+
+  // getAdminFcmId(){
+  //   db.collection("USER").where("TYPE",isEqualTo: "ADMIN").get().then((event) {
+  //     if(event.docs.isNotEmpty){
+  //       adminFcmList.clear();
+  //       for(var element in event.docs){
+  //         Map<dynamic, dynamic> notificationMap = element.data();
+  //         adminFcmList.add(notificationMap["FCM_ID"]??"");
+  //         notifyListeners();
+  //
+  //       }
+  //     }
+  //
+  //     });
+  //
+  // }
+
+  // Future<bool> callOnFcmApiSendPushNotifications(
+  //     {required String title,
+  //       required String body,
+  //       required String fcmList,
+  //       required String imageLink}) async {
+  //
+  //   print(fcmList.toString()+"jnjkmjnjn");
+  //   print(fcmList.length.toString()+"viuififi");
+  //
+  //   Uri posturlGroup = Uri.parse('https://fcm.googleapis.com/fcm/notification');
+  //
+  //   final headersGroup = {
+  //     'content-type': 'application/json',
+  //     'Authorization':
+  //     'key=AAAARv0MhFg:APA91bFHm5hJzP7K15v959LgSp57dPpCJq1T1KNE4QwO-BfEiXnYAM0-ad3LGjtKe_1xVK4HBB7yHouP2C7TWY6JYi-lsMp6RB_uB7Jn0nT_HRWn8kAfq-hVMTx-lSnsg4hG0GNaS00E',
+  //     // '
+  //     // key=YOUR_SERVER_KEY'
+  //     'project_id': '304893166680'
+  //   };
+  //   final dataGroup = {
+  //     "operation": "create",
+  //     "notification_key_name": DateTime.now().toString(),
+  //     "registration_ids": fcmList,
+  //   };
+  //   print("jffffffffffff");
+  //   final response1 = await http.post(posturlGroup,
+  //       body: json.encode(dataGroup),
+  //       encoding: Encoding.getByName('utf-8'),
+  //       headers: headersGroup);
+  //   print("irrrrrrrrrrrr");
+  //   final Map parsed = json.decode(response1.body);
+  //   var notificaitonKey = parsed["notification_key"];
+  //
+  //   print("cbhhhhhhhhhhh");
+  //   Uri postUrl = Uri.parse('https://fcm.googleapis.com/fcm/send');
+  //   final data = {
+  //     "to": notificaitonKey,
+  //     "notification": {"title": title, "body": body, "image": imageLink},
+  //     "data": {
+  //       "type": '0rder',
+  //       "id": '28',
+  //       "click_action": 'FLUTTER_NOTIFICATION_CLICK',
+  //     }
+  //   };
+  //   print("ittttttttteekej");
+  //   final headers = {
+  //     'content-type': 'application/json',
+  //     'Authorization': 'key=AAAARv0MhFg:APA91bFHm5hJzP7K15v959LgSp57dPpCJq1T1KNE4QwO-BfEiXnYAM0-ad3LGjtKe_1xVK4HBB7yHouP2C7TWY6JYi-lsMp6RB_uB7Jn0nT_HRWn8kAfq-hVMTx-lSnsg4hG0GNaS00E',
+  //
+  //     // 'key=YOUR_SERVER_KEY'
+  //   };
+  //
+  //   final response = await http.post(postUrl,
+  //       body: json.encode(data),
+  //       encoding: Encoding.getByName('utf-8'),
+  //       headers: headers);
+  //   print("${response.body} (response)");
+  //
+  //   if (response.statusCode == 200) {
+  //     // on success do sth
+  //     print('test ok push CFM');
+  //     return true;
+  //   } else {
+  //     print(' CFM error');
+  //     // on failure do sth
+  //     return false;
+  //   }
+  //   }
+
+  Future<bool> callOnFcmApiSendPushNotifications(
+      {required String title,
+        required String body,
+        required String fcmId,
+        required String imageLink}) async {
+
+    print(fcmId+"kmfmkfmkmk");
+
+    Uri postUrl = Uri.parse('https://fcm.googleapis.com/fcm/send');
+    final data = {
+      "to": fcmId,
+      // 'fnH1CCX-TluCgNxH2_538v:APA91bHpxAa-laX0GdJvpJIogijEysmDVA7OWV9IEo8MdvRjXFOSv06kY4NyBp-Ar4Q4i2auH3Pki2PJYJlhOlmaHl3XJnlQKmMhmJp98tgInuaH51ZbE_28X4hsOoe-nJU2JDjaqMDI',
+      "notification": {
+        "title": title,
+        "body": body,
+      },
+      "data": {
+        "type": '0rder',
+        "id": '28',
+        "click_action": 'FLUTTER_NOTIFICATION_CLICK',
+      }
+    };
+
+    final headers = {
+      'content-type': 'application/json',
+      'Authorization':
+      'key=AAAARv0MhFg:APA91bFHm5hJzP7K15v959LgSp57dPpCJq1T1KNE4QwO-BfEiXnYAM0-ad3LGjtKe_1xVK4HBB7yHouP2C7TWY6JYi-lsMp6RB_uB7Jn0nT_HRWn8kAfq-hVMTx-lSnsg4hG0GNaS00E',
+      // 'key=YOUR_SERVER_KEY'cx
+      'project_id': '304893166680'
+    };
+
+    final response = await http.post(postUrl,
+        body: json.encode(data),
+        encoding: Encoding.getByName('utf-8'),
+        headers: headers);
+    print("${response.body}aaaaaaa");
+
+    if (response.statusCode == 200) {
+      // on success do sth
+      print('test ok push CFM');
+      return true;
+    } else {
+      print(' CFM error');
+      // on failure do sth
+      return false;
+    }
+
+   }
+
+
+  // String fcmid='';
+  //
+  // void getFcm(){
+  //   FirebaseMessaging.instance.getToken().then((fcmValue) {
+  //
+  //     fcmid=fcmValue.toString();
+  //     print("yteuweyeywety"+fcmid.toString());
+  //   });
+  //   notifyListeners();
+  // }
+
+  String fcmid='';
+
+  getAdminFcmId(){
+    print("ooaoaoaooa"+fcmid);
+    print("kjkndvdknefvlknefv");
+    db.collection("USER")
+    .where("TYPE",isEqualTo: "ADMIN")
+        .get().then((event) {
+      if(event.docs.isNotEmpty){
+        print("jsjsjs");
+        // fcmid='';
+        for(var element in event.docs){
+          Map<dynamic, dynamic> notificationMap = element.data();
+          fcmid=notificationMap["FCM_ID"]??"";
+          notifyListeners();
+        }
+        print("smncbwndbc");
+      }
+
+      });
+
+  }
+  getUserFcmId(){
+    print("ooaoajhvhgoaooa"+fcmid);
+    print("hhhhhh");
+    db.collection("USER")
+    .where("TYPE",isEqualTo: "USER")
+        .get().then((event) {
+      if(event.docs.isNotEmpty){
+        print("jsjsjs");
+        // fcmid='';
+        for(var element in event.docs){
+          Map<dynamic, dynamic> notificationMap = element.data();
+          fcmid=notificationMap["FCM_ID"]??"";
+          notifyListeners();
+        }
+        print("bhvbhgb");
+      }
+
+      });
+
+  }
+
 
 
 

@@ -108,7 +108,7 @@ class _homeState extends State<home> {
                       SizedBox(height: 20,),
                       text2(14, "-Implimentation."),
                       SizedBox(height: 20,),
-                      text2(14, "-Cntrolling."),
+                      text2(14, "-Controlling."),
                       SizedBox(height: 20,),
                       text2(13, "-Understanding Legal&Insurence issues."),
                     ],
