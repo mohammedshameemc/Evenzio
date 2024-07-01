@@ -52,6 +52,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   intl: ^0.19.0
   firebase_messaging: ^14.7.17
+  flutter_gradient_animation_text: ^1.0.2
+
 
 
 
@@ -95,15 +97,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+     - family: splashT1
+       fonts:
+         - asset: assets/CevicheOne-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+     - family: splashT2
+       fonts:
+         - asset: assets/AlexBrush-Regular.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

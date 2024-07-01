@@ -2,12 +2,13 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart'as firebase_storage;
+import 'package:firebase_storage/firebase_storage.dart' ;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstproject/Modules/Favoritemodel.dart';
 import 'package:firstproject/Modules/Ordermodel.dart';
 import 'package:firstproject/Modules/mainCategoryModel.dart';
+import 'package:firstproject/Modules/notificationmodel.dart';
 import 'package:firstproject/Modules/usersmodel.dart';
 import 'package:firstproject/constance/callfunctions.dart';
 import 'package:firstproject/constance/colors.dart';
@@ -16,9 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
 
 import '../Modules/appointmentModel.dart';
 import '../Modules/categorymodel.dart';
@@ -27,29 +27,21 @@ import '../Modules/problemmodel.dart';
 import '../Modules/reviewmodel.dart';
 import 'loginProvider.dart';
 
-
-
-
 class MainProvider extends ChangeNotifier {
-
-
   final FirebaseFirestore db = FirebaseFirestore.instance;
-  firebase_storage.Reference ref = FirebaseStorage.instance.ref("Images");
+  Reference ref = FirebaseStorage.instance.ref("Images");
+
 
   TextEditingController mainNamecontroller = TextEditingController();
   File? mainfileImage;
   String mainimageUrl = "";
   List<mainCategorymodel> mainCategorylist = [];
 
-  List<Categorymodel> categoryList=[];
+  List<Categorymodel> categoryList = [];
 
-
-  Future<void> addMainCategory(String from, String selectid,
-      BuildContext context) async {
-    String id = DateTime
-        .now()
-        .microsecondsSinceEpoch
-        .toString();
+  Future<void> addMainCategory(
+      String from, String selectid, BuildContext context) async {
+    String id = DateTime.now().microsecondsSinceEpoch.toString();
     HashMap<String, Object> addMainMap = HashMap();
     addMainMap["NAME"] = mainNamecontroller.text;
     addMainMap["TIME"] = DateTime.now();
@@ -59,12 +51,8 @@ class MainProvider extends ChangeNotifier {
 
     // }
 
-
     if (mainfileImage != null) {
-      String photoId = DateTime
-          .now()
-          .millisecondsSinceEpoch
-          .toString();
+      String photoId = DateTime.now().millisecondsSinceEpoch.toString();
 
       ref = FirebaseStorage.instance.ref().child(photoId);
       await ref.putFile(mainfileImage!).whenComplete(() async {
@@ -83,9 +71,9 @@ class MainProvider extends ChangeNotifier {
     }
 
     // if (from == "NEW") {
-      db.collection("MAIN_CATEGORY").doc(id).set(addMainMap);
-      // getCategory();
-      finish(context);
+    db.collection("MAIN_CATEGORY").doc(id).set(addMainMap);
+    // getCategory();
+    finish(context);
     // }
     // else {
     //   db.collection("CATEGORY").doc(selectid).update(addMap);
@@ -93,18 +81,17 @@ class MainProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
   void mainSetImage(File imagee) {
     mainfileImage = imagee;
-
 
     notifyListeners();
   }
 
-
   Future getMainImagegallery() async {
     final imagePicker = ImagePicker();
     final pickedImage =
-    await imagePicker.pickImage(source: ImageSource.gallery);
+        await imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       // setImage(File(pickedImage.path));
@@ -117,14 +104,12 @@ class MainProvider extends ChangeNotifier {
 
   Future getMainImagecamera() async {
     final imagePicker = ImagePicker();
-    final pickedImage =
-    await imagePicker.pickImage(source: ImageSource.camera);
+    final pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
 
     if (pickedImage != null) {
       // print("dfghjk"+pickedImage.path);
       mainCropImage(pickedImage.path);
       // setImage(File(pickedImage.path));
-
     } else {
       print('No image selected.');
     }
@@ -135,23 +120,23 @@ class MainProvider extends ChangeNotifier {
       sourcePath: path,
       aspectRatioPresets: Platform.isAndroid
           ? [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9,
-      ]
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio16x9,
+            ]
           : [
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio5x3,
-        CropAspectRatioPreset.ratio5x4,
-        CropAspectRatioPreset.ratio7x5,
-        CropAspectRatioPreset.ratio16x9,
-        CropAspectRatioPreset.ratio16x9
-      ],
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio5x3,
+              CropAspectRatioPreset.ratio5x4,
+              CropAspectRatioPreset.ratio7x5,
+              CropAspectRatioPreset.ratio16x9,
+              CropAspectRatioPreset.ratio16x9
+            ],
       uiSettings: [
         AndroidUiSettings(
             toolbarTitle: 'Cropper',
@@ -169,13 +154,14 @@ class MainProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
   void getMainCategory() {
     db.collection("MAIN_CATEGORY").get().then((value) {
       if (value.docs.isNotEmpty) {
         mainCategorylist.clear();
         for (var value in value.docs) {
-          mainCategorylist.add(
-              mainCategorymodel(value.get("PHOTO"), value.get("NAME"), value.id));
+          mainCategorylist.add(mainCategorymodel(
+              value.get("PHOTO"), value.get("NAME"), value.id));
           notifyListeners();
           // print(Categorylist.length.toString()+"xyz");
           // print(Categorylist.length.toString()+"xyz");
@@ -183,18 +169,14 @@ class MainProvider extends ChangeNotifier {
       }
     });
   }
+
   void clearMaincategory() {
     mainNamecontroller.clear();
     mainfileImage = null;
     mainimageUrl = "";
   }
 
-
-
   // ============================================
-
-
-
 
   TextEditingController namecontroller = TextEditingController();
   TextEditingController categorycontroller = TextEditingController();
@@ -202,27 +184,20 @@ class MainProvider extends ChangeNotifier {
   String imageUrl = "";
   List<Categorymodel> Categorylist = [];
 
+  String productSelectedCategoryID = "";
 
-
-String productSelectedCategoryID ="";
-
-
-  Future<void> addCategory(String from, String selectid,
-      BuildContext context) async {
-    String id = DateTime
-        .now()
-        .microsecondsSinceEpoch
-        .toString();
+  Future<void> addCategory(
+      String from, String selectid, BuildContext context) async {
+    String id = DateTime.now().microsecondsSinceEpoch.toString();
     HashMap<String, Object> addMap = HashMap();
     addMap["NAME"] = namecontroller.text;
-    addMap["MAIN_CATEGORY"] =categorycontroller.text;
+    addMap["MAIN_CATEGORY"] = categorycontroller.text;
     addMap["MAIN_CATEGORY_ID"] = productSelectedCategoryID;
     addMap["TIME"] = DateTime.now();
     addMap["ADDED_BY"] = "";
     if (from == "NEW") {
       addMap["CATEGORY_ID"] = id;
     }
-
 
     if (fileImage != null) {
       String photoId = DateTime.now().millisecondsSinceEpoch.toString();
@@ -246,9 +221,7 @@ String productSelectedCategoryID ="";
     if (from == "NEW") {
       db.collection("CATEGORY").doc(id).set(addMap);
       getCategory();
-
-    }
-    else {
+    } else {
       db.collection("CATEGORY").doc(selectid).update(addMap);
     }
 
@@ -258,15 +231,13 @@ String productSelectedCategoryID ="";
   void setImage(File imagee) {
     fileImage = imagee;
 
-
     notifyListeners();
   }
-
 
   Future getImagegallery() async {
     final imagePicker = ImagePicker();
     final pickedImage =
-    await imagePicker.pickImage(source: ImageSource.gallery);
+        await imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       // setImage(File(pickedImage.path));
@@ -279,14 +250,12 @@ String productSelectedCategoryID ="";
 
   Future getImagecamera() async {
     final imagePicker = ImagePicker();
-    final pickedImage =
-    await imagePicker.pickImage(source: ImageSource.camera);
+    final pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
 
     if (pickedImage != null) {
       // print("dfghjk"+pickedImage.path);
       cropImage(pickedImage.path);
       // setImage(File(pickedImage.path));
-
     } else {
       print('No image selected.');
     }
@@ -297,23 +266,23 @@ String productSelectedCategoryID ="";
       sourcePath: path,
       aspectRatioPresets: Platform.isAndroid
           ? [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9,
-      ]
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio16x9,
+            ]
           : [
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio5x3,
-        CropAspectRatioPreset.ratio5x4,
-        CropAspectRatioPreset.ratio7x5,
-        CropAspectRatioPreset.ratio16x9,
-        CropAspectRatioPreset.ratio16x9
-      ],
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio5x3,
+              CropAspectRatioPreset.ratio5x4,
+              CropAspectRatioPreset.ratio7x5,
+              CropAspectRatioPreset.ratio16x9,
+              CropAspectRatioPreset.ratio16x9
+            ],
       uiSettings: [
         AndroidUiSettings(
             toolbarTitle: 'Cropper',
@@ -337,8 +306,8 @@ String productSelectedCategoryID ="";
       if (value.docs.isNotEmpty) {
         Categorylist.clear();
         for (var value in value.docs) {
-          Categorylist.add(
-              Categorymodel(value.get("PHOTO"), value.get("NAME"), value.id,value.get("MAIN_CATEGORY_ID")));
+          Categorylist.add(Categorymodel(value.get("PHOTO"), value.get("NAME"),
+              value.id, value.get("MAIN_CATEGORY_ID")));
           notifyListeners();
           // print(Categorylist.length.toString()+"xyz");
           // print(Categorylist.length.toString()+"xyz");
@@ -347,8 +316,7 @@ String productSelectedCategoryID ="";
     });
   }
 
-  void editcategory
-      (String Cid) {
+  void editcategory(String Cid) {
     db.collection("CATEGORY").doc(Cid).get().then((value) {
       if (value.exists) {
         Map<dynamic, dynamic> map1 = value.data() as Map;
@@ -356,22 +324,19 @@ String productSelectedCategoryID ="";
         categorycontroller.text = map1["MAIN_CATEGORY_ID"].toString();
         namecontroller.text = map1["NAME"].toString();
         imageUrl = map1["PHOTO"].toString();
-        fileImage=null;
-
+        fileImage = null;
 
         notifyListeners();
       }
     });
   }
 
-
   void deletecategory(selectedid, BuildContext context) {
     db.collection("CATEGORY").doc(selectedid).delete();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Deleted successfully"),
       backgroundColor: maincolor,
-    )
-    );
+    ));
     getCategory();
     notifyListeners();
   }
@@ -381,7 +346,6 @@ String productSelectedCategoryID ="";
     fileImage = null;
     imageUrl = "";
   }
-
 
   List<String> Carosuelimg = [
     "assets/decoration.png",
@@ -417,8 +381,8 @@ String productSelectedCategoryID ="";
 
   List<itemModel> itemList = [];
 
-
-  Future<void> addItem(String from, String selectid, BuildContext context) async {
+  Future<void> addItem(
+      String from, String selectid, BuildContext context) async {
     String id = DateTime.now().microsecondsSinceEpoch.toString();
     HashMap<String, Object> addItemMap = HashMap();
     addItemMap["NAME"] = itemNameController.text;
@@ -428,23 +392,17 @@ String productSelectedCategoryID ="";
 
     addItemMap["TIME"] = DateTime.now();
     addItemMap["ADDED_BY"] = "";
-    if(from=="NEW"){
+    if (from == "NEW") {
       addItemMap["CATEGORY_ID"] = productSelectedItemID;
       addItemMap["ITEM_ID"] = id;
       addItemMap["MAIN_CATEGORY_ID"] = productSelectedItemid;
       notifyListeners();
-    }else if(from=="EDIT"){
-      addItemMap["ITEM_ID"] =productSelectedItemID;
-
-
+    } else if (from == "EDIT") {
+      addItemMap["ITEM_ID"] = productSelectedItemID;
     }
 
-
     if (itemFileImage != null) {
-      String photoId = DateTime
-          .now()
-          .millisecondsSinceEpoch
-          .toString();
+      String photoId = DateTime.now().millisecondsSinceEpoch.toString();
 
       ref = FirebaseStorage.instance.ref().child(photoId);
       await ref.putFile(itemFileImage!).whenComplete(() async {
@@ -466,17 +424,15 @@ String productSelectedCategoryID ="";
       db.collection("ITEM").doc(id).set(addItemMap);
       notifyListeners();
       finish(context);
-    }
-    else {
+    } else {
       db.collection("ITEM").doc(selectid).update(addItemMap);
     }
   }
 
-
   Future itemGetImagegallery() async {
     final imagePicker = ImagePicker();
     final pickedImage =
-    await imagePicker.pickImage(source: ImageSource.gallery);
+        await imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       // setImage(File(pickedImage.path));
@@ -490,14 +446,12 @@ String productSelectedCategoryID ="";
 
   Future itemGetImagecamera() async {
     final imagePicker = ImagePicker();
-    final pickedImage =
-    await imagePicker.pickImage(source: ImageSource.camera);
+    final pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
 
     if (pickedImage != null) {
       print("dfghjk" + pickedImage.path);
       itemCropImage(pickedImage.path);
       // setImage(File(pickedImage.path));
-
     } else {
       print('No image selected.');
     }
@@ -509,23 +463,23 @@ String productSelectedCategoryID ="";
       sourcePath: path,
       aspectRatioPresets: Platform.isAndroid
           ? [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9,
-      ]
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio16x9,
+            ]
           : [
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio5x3,
-        CropAspectRatioPreset.ratio5x4,
-        CropAspectRatioPreset.ratio7x5,
-        CropAspectRatioPreset.ratio16x9,
-        CropAspectRatioPreset.ratio16x9
-      ],
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio5x3,
+              CropAspectRatioPreset.ratio5x4,
+              CropAspectRatioPreset.ratio7x5,
+              CropAspectRatioPreset.ratio16x9,
+              CropAspectRatioPreset.ratio16x9
+            ],
       uiSettings: [
         AndroidUiSettings(
             toolbarTitle: 'Cropper',
@@ -550,8 +504,12 @@ String productSelectedCategoryID ="";
         itemList.clear();
         for (var value in value.docs) {
           itemList.add(itemModel(
-              value.get("PHOTO"), value.get("NAME"), value.id,
-              value.get("RATE"),value.get("MAIN_CATEGORY_ID"),value.get("CATEGORY_ID")));
+              value.get("PHOTO"),
+              value.get("NAME"),
+              value.id,
+              value.get("RATE"),
+              value.get("MAIN_CATEGORY_ID"),
+              value.get("CATEGORY_ID")));
           notifyListeners();
           // print(Categorylist.length.toString()+"xyz");
           // print(Categorylist.length.toString()+"xyz");
@@ -562,19 +520,17 @@ String productSelectedCategoryID ="";
     });
   }
 
-  void editItem
-      (String Tid) {
+  void editItem(String Tid) {
     db.collection("ITEM").doc(Tid).get().then((value) {
       if (value.exists) {
         Map<dynamic, dynamic> map2 = value.data() as Map;
 
-        productSelectedItemID=map2["ITEM_ID"].toString();
-        productSelectedItemid=map2["MAIN_CATEGORY_ID"].toString();
-        itemsController.text=map2["MAIN_CATEGORY"].toString();
+        productSelectedItemID = map2["ITEM_ID"].toString();
+        productSelectedItemid = map2["MAIN_CATEGORY_ID"].toString();
+        itemsController.text = map2["MAIN_CATEGORY"].toString();
         itemNameController.text = map2["NAME"].toString();
         itemRateController.text = map2["RATE"].toString();
         itemImageUrl = map2["PHOTO"].toString();
-
 
         notifyListeners();
       }
@@ -586,8 +542,7 @@ String productSelectedCategoryID ="";
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Deleted successfully"),
       backgroundColor: maincolor,
-    )
-    );
+    ));
     getCategory();
     notifyListeners();
   }
@@ -599,34 +554,14 @@ String productSelectedCategoryID ="";
     itemImageUrl = "";
   }
 
-
-
-
-
-
   // this is over add item
-
-
-
-
-
-
-
-
-
-
-
 
   TextEditingController userNameController = TextEditingController();
   TextEditingController userAddresController = TextEditingController();
   TextEditingController userPhoneController = TextEditingController();
 
-
   Future<void> AddUsers(String From, String profileid) async {
-    String id = DateTime
-        .now()
-        .millisecondsSinceEpoch
-        .toString();
+    String id = DateTime.now().millisecondsSinceEpoch.toString();
     HashMap<String, Object> customermap = HashMap();
     customermap["NAME"] = userNameController.text.toString();
     customermap["ADDRESS"] = userAddresController.text.toString();
@@ -634,8 +569,8 @@ String productSelectedCategoryID ="";
     // customermap["ADDED_TIME"] = DateTime.now();
     // customermap["ADDED_BY"] = "";
 
-
     HashMap<String, Object> usermap = HashMap();
+
     usermap["NAME"] = userNameController.text.toString();
     usermap["TYPE"] = "USER";
     usermap["PHONE"] = "+91${userPhoneController.text}";
@@ -645,10 +580,7 @@ String productSelectedCategoryID ="";
     }
 
     if (profilimage != null) {
-      String photoId = DateTime
-          .now()
-          .millisecondsSinceEpoch
-          .toString();
+      String photoId = DateTime.now().millisecondsSinceEpoch.toString();
 
       ref = FirebaseStorage.instance.ref().child(photoId);
       await ref.putFile(profilimage!).whenComplete(() async {
@@ -663,8 +595,6 @@ String productSelectedCategoryID ="";
       notifyListeners();
     }
     if (From == "NEW") {
-
-
       db.collection("USER").doc(id).set(usermap);
     } else {
       print(profileid + "djhhfhfh");
@@ -674,9 +604,7 @@ String productSelectedCategoryID ="";
     }
 
     getUser();
-
   }
-
 
   String name = "";
   String id = "";
@@ -684,9 +612,7 @@ String productSelectedCategoryID ="";
   String phone = "";
   String photo = "";
 
-
-  void
-  getUser() {
+  void getUser() {
     db.collection("CUSTOMERS").get().then((value) {
       if (value.docs.isNotEmpty) {
         for (var value in value.docs) {
@@ -717,7 +643,7 @@ String productSelectedCategoryID ="";
   Future profilImagegallery() async {
     final imagePicker = ImagePicker();
     final pickedImage =
-    await imagePicker.pickImage(source: ImageSource.gallery);
+        await imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       // setImage(File(pickedImage.path));
@@ -730,14 +656,12 @@ String productSelectedCategoryID ="";
 
   Future profilImagecamera() async {
     final imagePicker = ImagePicker();
-    final pickedImage =
-    await imagePicker.pickImage(source: ImageSource.camera);
+    final pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
 
     if (pickedImage != null) {
       // print("dfghjk"+pickedImage.path);f
       profilcropImage(pickedImage.path);
       // setImage(File(pickedImage.path));
-
     } else {
       print('No image selected.');
     }
@@ -748,23 +672,23 @@ String productSelectedCategoryID ="";
       sourcePath: path,
       aspectRatioPresets: Platform.isAndroid
           ? [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9,
-      ]
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio16x9,
+            ]
           : [
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio5x3,
-        CropAspectRatioPreset.ratio5x4,
-        CropAspectRatioPreset.ratio7x5,
-        CropAspectRatioPreset.ratio16x9,
-        CropAspectRatioPreset.ratio16x9
-      ],
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio5x3,
+              CropAspectRatioPreset.ratio5x4,
+              CropAspectRatioPreset.ratio7x5,
+              CropAspectRatioPreset.ratio16x9,
+              CropAspectRatioPreset.ratio16x9
+            ],
       uiSettings: [
         AndroidUiSettings(
             toolbarTitle: 'Cropper',
@@ -783,16 +707,13 @@ String productSelectedCategoryID ="";
     }
   }
 
-
   void clearUsers() {
     userNameController.clear();
     userAddresController.clear();
     userPhoneController.clear();
   }
 
-
 // this is over registration and get profile
-
 
   TextEditingController orderNamecontroller = TextEditingController();
   TextEditingController orderTimecontroller = TextEditingController();
@@ -803,12 +724,8 @@ String productSelectedCategoryID ="";
   List<appointmentModel> appointmentList = [];
   List<orderdetails> orderList = [];
 
-
-
-
-  Future<void> addOrder(String userid ,List itemid,BuildContext context) async
-  {
-
+  Future<void> addOrder(
+      String userid, List itemid, BuildContext context) async {
     String id = DateTime.now().millisecondsSinceEpoch.toString();
     HashMap<String, Object> orderMap = HashMap();
     // HashMap<String, Object> orderitemMap = HashMap();
@@ -821,43 +738,49 @@ String productSelectedCategoryID ="";
     orderMap["ORDER_ID"] = id;
     orderMap["STATUS"] = "Requested";
     orderMap["USER_ID"] = userid;
-     orderMap["ITEM_ID"] = itemid;
-
+    orderMap["ITEM_ID"] = itemid;
 
     db.collection("ORDER_DETAILS").doc(id).set(orderMap);
-    db.collection("FAVORITE").where("USER_ID",isEqualTo: userid).get().then((value) {
-      if(value.docs.isNotEmpty){
-        for(var element in value.docs){
-          print("hajjajsjjs"+element.id);
-         db.collection("FAVORITE").doc(element.id).delete();
+    db
+        .collection("FAVORITE")
+        .where("USER_ID", isEqualTo: userid)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        for (var element in value.docs) {
+          print("hajjajsjjs" + element.id);
+          db.collection("FAVORITE").doc(element.id).delete();
           favoriteList.clear();
-
         }
       }
     });
-    print("adminmnffffff"+fcmid);
-    print("hshssh"+ orderMap["NAME"].toString());
+    print("adminmnffffff" + fcmid);
+    print("hshssh" + orderMap["NAME"].toString());
+
     callOnFcmApiSendPushNotifications(
       title: "order",
-      body: orderMap["NAME"].toString()+"REQUESTED ORDER",
-      fcmId:"fD9UmRu2SaeRewttQ_U97z:APA91bH4whcuTzU7PsnMsXDPrEloe_iOggAnXVY7ZdhgpS7rzJKTuQJtVBprzzIK5Im-TlUFO9IRL_7yancUW0XooLDk3ACqSV-QxyJ4N3xHuZXVgeW-l32sD-u22pIpCeaCc9Eum3WG",
+      body: orderMap["NAME"].toString() + "Your booking has been requested",
+      fcmId: fcmid,
+      // "fD9UmRu2SaeRewttQ_U97z:APA91bH4whcuTzU7PsnMsXDPrEloe_iOggAnXVY7ZdhgpS7rzJKTuQJtVBprzzIK5Im-TlUFO9IRL_7yancUW0XooLDk3ACqSV-QxyJ4N3xHuZXVgeW-l32sD-u22pIpCeaCc9Eum3WG",
       imageLink: "",
-
     );
-  print("sxvsanxcv");
+    print("sxvsanxcv");
 
     notifyListeners();
   }
 
-  List<String> itemid=[];
-  void getallitems(String userid){
+  List<String> itemid = [];
+  void getallitems(String userid) {
     itemid.clear();
-    db.collection("FAVORITE").where("USER_ID",isEqualTo:userid).get().then((value) {
-      if(value.docs.isNotEmpty){
-        for(var element in value.docs){
+    db
+        .collection("FAVORITE")
+        .where("USER_ID", isEqualTo: userid)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        for (var element in value.docs) {
           itemid.add(element.get("ITEM_ID"));
           notifyListeners();
-          
         }
       }
     });
@@ -967,12 +890,13 @@ String productSelectedCategoryID ="";
     String photo = '';
     String rate = '';
 
-
-    db.collection("ORDER_DETAILS").where("USER_ID",isEqualTo: userId).get().then((value) {
-
+    db
+        .collection("ORDER_DETAILS")
+        .where("USER_ID", isEqualTo: userId)
+        .get()
+        .then((value) {
       print("hnjm bhbh");
       if (value.docs.isNotEmpty) {
-
         orderList.clear();
         for (var elements in value.docs) {
           Map<String, dynamic> ordermap = elements.data();
@@ -983,16 +907,19 @@ String productSelectedCategoryID ="";
             itemIdList.add(kk);
             notifyListeners();
           }
-          print("gfvhewvkjwehfvhe"+itemIdList.toString());
-          db.collection("ITEM").where("ITEM_ID",whereIn:itemIdList).get().then((val){
-            if(val.docs.isNotEmpty){
-              for(var elem in val.docs){
-                print("jhvbjnvbnvf"+name.toString());
+          print("gfvhewvkjwehfvhe" + itemIdList.toString());
+          db
+              .collection("ITEM")
+              .where("ITEM_ID", whereIn: itemIdList)
+              .get()
+              .then((val) {
+            if (val.docs.isNotEmpty) {
+              for (var elem in val.docs) {
+                print("jhvbjnvbnvf" + name.toString());
 
                 photo = elem.get("PHOTO").toString();
                 name = elem.get("NAME").toString();
                 rate = elem.get("RATE").toString();
-
               }
               orderList.add(orderdetails(
                   name,
@@ -1007,53 +934,47 @@ String productSelectedCategoryID ="";
                   ordermap["GUST"],
                   ordermap["ADDRESS"].toString(),
                   ordermap["ORDER_ID"].toString(),
-
                   ordermap["STATUS"].toString()));
               notifyListeners();
-
             }
-
           });
-          
+
           notifyListeners();
         }
       }
-      });
-    }
-  void getadminorderdetils() {
+    });
+  }
 
+  void getadminorderdetils() {
     List<String> itemIdList = [];
     String name = '';
     String photo = '';
     String rate = '';
     orderList.clear();
 
-
     db.collection("ORDER_DETAILS").get().then((value) {
-
       print("hnjm bhbh");
       if (value.docs.isNotEmpty) {
-
-
         for (var elements in value.docs) {
           Map<String, dynamic> ordermap = elements.data();
           // productid=ordermap["PRODUCT_ID"];
           for (var kk in ordermap["ITEM_ID"]) {
-
             itemIdList.add(kk);
             notifyListeners();
           }
           // print("gfvhewvkjwehfvhe"+itemIdList.toString());
-          db.collection("ITEM").where("ITEM_ID",whereIn:itemIdList).get().then((val){
-            if(val.docs.isNotEmpty){
-
-              for(var elem in val.docs){
+          db
+              .collection("ITEM")
+              .where("ITEM_ID", whereIn: itemIdList)
+              .get()
+              .then((val) {
+            if (val.docs.isNotEmpty) {
+              for (var elem in val.docs) {
                 // print("jhvbjnvbnvf"+name.toString()+itemid.toString());
 
                 photo = elem.get("PHOTO").toString();
                 name = elem.get("NAME").toString();
                 rate = elem.get("RATE").toString();
-
               }
               orderList.add(orderdetails(
                   name,
@@ -1068,23 +989,15 @@ String productSelectedCategoryID ="";
                   ordermap["GUST"],
                   ordermap["ADDRESS"].toString(),
                   ordermap["ORDER_ID"].toString(),
-
                   ordermap["STATUS"].toString()));
               notifyListeners();
             }
-
           });
           notifyListeners();
         }
       }
-      });
-    }
-
-
-
-
-
-
+    });
+  }
 
   void clearorder() {
     orderNamecontroller.clear();
@@ -1095,7 +1008,6 @@ String productSelectedCategoryID ="";
     orderAddresscontroller.clear();
   }
 
-
   void acceptStatusUpdate(String id) {
     HashMap<String, Object> Acceptmap = HashMap();
     Acceptmap["STATUS"] = "Accepted";
@@ -1104,19 +1016,18 @@ String productSelectedCategoryID ="";
     db.collection("ORDER_DETAILS").doc(id).update(Acceptmap);
 
     // print("mnfffjknjnjnfff"+fcmid);
-    print("hshssh"+ Acceptmap["NAME"].toString());
+    print("hshssh" + Acceptmap["NAME"].toString());
 
     callOnFcmApiSendPushNotifications(
       title: "your order is accepted",
-      body: Acceptmap["NAME"].toString()+"REQUESTED",
-      fcmId:fcmid,
+      body: Acceptmap["NAME"].toString() + "REQUESTED",
+      fcmId: fcmid,
       imageLink: "",
     );
 
     print("sxvsanxcv");
 
     notifyListeners();
-
   }
 
   void rejectStatusUpdate(String id) {
@@ -1124,30 +1035,26 @@ String productSelectedCategoryID ="";
     RejectMap["STATUS"] = "Rejected";
     RejectMap["REJECTED_TIME"] = DateTime.now();
     db.collection("ORDER_DETAILS").doc(id).update(RejectMap);
-    
-    print("hnnuinuinuinhui"+fcmid);
-    print("hshssh"+ RejectMap["NAME"].toString());
+
+    print("hnnuinuinuinhui" + fcmid);
+    print("hshssh" + RejectMap["NAME"].toString());
 
     callOnFcmApiSendPushNotifications(
       title: "add order",
-      body: RejectMap["NAME"].toString()+"REQUESTED",
-      fcmId:fcmid,
+      body: RejectMap["NAME"].toString() + "REQUESTED",
+      fcmId: fcmid,
       imageLink: "",
-
     );
     print("sxvsanxcv");
 
     notifyListeners();
     notifyListeners();
-
-
   }
 
 // this is over order page
 
   TextEditingController reviewController = TextEditingController();
   List<reviewModel> reviewList = [];
-
 
   void addReviews(String userId, double rating, String userName) {
     String id = DateTime.now().millisecondsSinceEpoch.toString();
@@ -1164,7 +1071,6 @@ String productSelectedCategoryID ="";
     notifyListeners();
   }
 
-
   void getReviews() {
     db.collection("REVIEWS").get().then((value) {
       if (value.docs.isNotEmpty) {
@@ -1175,9 +1081,7 @@ String productSelectedCategoryID ="";
               value.get("RATING").toString(),
               value.id,
               value.get("USER_NAME").toString(),
-              value.get("USER_ID").toString()
-
-          ));
+              value.get("USER_ID").toString()));
           notifyListeners();
         }
       }
@@ -1190,8 +1094,11 @@ String productSelectedCategoryID ="";
 
   void getUserPhoto(String userId, String userName) {
     print("dbd");
-    db.collection("CUSTOMERS").where("USER_ID", isEqualTo: userId).get().then((
-        value) {
+    db
+        .collection("CUSTOMERS")
+        .where("USER_ID", isEqualTo: userId)
+        .get()
+        .then((value) {
       if (value.docs.isNotEmpty) {
         loginphoto = value.docs.last.get("PHOTO").toString();
         loginname = value.docs.last.get("NAME").toString();
@@ -1199,55 +1106,57 @@ String productSelectedCategoryID ="";
         print("dwg" + loginphoto);
       }
       notifyListeners();
-
-    }
-    );
+    });
   }
-  void deletereview(String selectid,String userid, BuildContext context) {
+
+  void deletereview(String selectid, String userid, BuildContext context) {
     db.collection("REVIEWS").doc(selectid).delete();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Deleted successfully"),
       backgroundColor: maincolor,
-    )
-    );
+    ));
     getReviews();
     notifyListeners();
   }
 
-
   void clearReview() {
     reviewController.clear();
-
-
-
   }
+
   String catPhoto = "";
   String catName = "";
   void getusercategory(String mcatId) {
-    db.collection("CATEGORY").where("MAIN_CATEGORY_ID", isEqualTo: mcatId).get().then((value) {
+    db
+        .collection("CATEGORY")
+        .where("MAIN_CATEGORY_ID", isEqualTo: mcatId)
+        .get()
+        .then((value) {
       if (value.docs.isNotEmpty) {
         categoryList.clear();
-        for(var e in value.docs){
-          categoryList.add(Categorymodel(e.get("PHOTO").toString(), e.get("NAME").toString(), e.id,e.get("MAIN_CATEGORY_ID")));
-        notifyListeners();
+        for (var e in value.docs) {
+          categoryList.add(Categorymodel(e.get("PHOTO").toString(),
+              e.get("NAME").toString(), e.id, e.get("MAIN_CATEGORY_ID")));
+          notifyListeners();
         }
-
       }
       notifyListeners();
-
-    }
-    );
+    });
   }
 
   String itemPhoto = "";
   String itemName = "";
   String itemRate = "";
   void getuseritem(String catId) {
-    db.collection("ITEM").where("CATEGORY_ID", isEqualTo: catId).get().then((value) {
+    db
+        .collection("ITEM")
+        .where("CATEGORY_ID", isEqualTo: catId)
+        .get()
+        .then((value) {
       if (value.docs.isNotEmpty) {
         itemList.clear();
-        for(var e in value.docs){
-          itemList.add(itemModel(e.get("PHOTO").toString(),
+        for (var e in value.docs) {
+          itemList.add(itemModel(
+              e.get("PHOTO").toString(),
               e.get("NAME").toString(),
               e.id,
               e.get("RATE").toString(),
@@ -1256,18 +1165,15 @@ String productSelectedCategoryID ="";
           notifyListeners();
         }
         notifyListeners();
-
       }
       notifyListeners();
-
-
-    }
-    );
+    });
   }
-  List<favoriteModels> favoriteList= [];
 
-  void addFavorite(context,String userId,String itemId,String favPhoto,String favName,String faveRate ){
+  List<favoriteModels> favoriteList = [];
 
+  void addFavorite(context, String userId, String itemId, String favPhoto,
+      String favName, String faveRate) {
     String id = DateTime.now().millisecondsSinceEpoch.toString();
     HashMap<String, Object> favoriteMap = HashMap();
     favoriteMap["USER_ID"] = userId;
@@ -1280,21 +1186,24 @@ String productSelectedCategoryID ="";
 
     db.collection("FAVORITE").doc(id).set(favoriteMap);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Add to Favorite",style: TextStyle(color:maincolor, fontStyle: FontStyle.italic),),
+      content: Text(
+        "Add to Favorite",
+        style: TextStyle(color: maincolor, fontStyle: FontStyle.italic),
+      ),
       backgroundColor: Colors.white,
-    )
-    );
-
-
-
+    ));
 
     getUserFavorite(userId);
     // getUserPhoto(userId, userName);
     notifyListeners();
   }
 
-  void getUserFavorite(String userid){
-    db.collection("FAVORITE").where("USER_ID",isEqualTo: userid).get().then((value) {
+  void getUserFavorite(String userid) {
+    db
+        .collection("FAVORITE")
+        .where("USER_ID", isEqualTo: userid)
+        .get()
+        .then((value) {
       if (value.docs.isNotEmpty) {
         favoriteList.clear();
         for (var value in value.docs) {
@@ -1304,17 +1213,14 @@ String productSelectedCategoryID ="";
               value.get("PHOTO").toString(),
               value.get("NAME").toString(),
               value.get("RATE").toString(),
-            value.id
-
-
-
-          ));
+              value.id));
           notifyListeners();
         }
       }
       notifyListeners();
     });
   }
+
   // void getAdminFavorite(String userid){
   //   db.collection("FAVORITE").get().then((value) {
   //     if (value.docs.isNotEmpty) {
@@ -1337,16 +1243,19 @@ String productSelectedCategoryID ="";
   //     notifyListeners();
   //   });
   // }
-  void removeFavorite(selectedid, BuildContext context,String userid) {
+  void removeFavorite(selectedid, BuildContext context, String userid) {
     db.collection("FAVORITE").doc(selectedid).delete();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Remove in Favorite",style: TextStyle(color:maincolor, fontStyle: FontStyle.italic),),
+      content: Text(
+        "Remove in Favorite",
+        style: TextStyle(color: maincolor, fontStyle: FontStyle.italic),
+      ),
       backgroundColor: Colors.white,
-    )
-    );
+    ));
     getUserFavorite(userid);
     notifyListeners();
   }
+
   // void deletefavouratelist( itemid, BuildContext context,) {
   //   db.collection("FAVORITE").doc(itemid).delete();
   //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -1369,7 +1278,6 @@ String productSelectedCategoryID ="";
   var outputTimeFormat = DateFormat('hh:mm a');
   // TextEditingController dateController = TextEditingController();
   // TextEditingController timeController = TextEditingController();
-
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -1394,24 +1302,22 @@ String productSelectedCategoryID ="";
 
     if (picked != null) {
       _time = picked;
-      scheduledDayNode =
-          _date.year.toString() + '/' + _date.month.toString() + '/' +
-              _date.day.toString();
+      scheduledDayNode = _date.year.toString() +
+          '/' +
+          _date.month.toString() +
+          '/' +
+          _date.day.toString();
       scheduledTime = DateTime(
           _date.year, _date.month, _date.day, _time.hour, _time.minute);
       orderTimecontroller.text = outputTimeFormat.format(scheduledTime);
     }
-    }
+  }
 
+  TextEditingController problemcontroller = TextEditingController();
+  List<problemmodel> problemlist = [];
 
-
-
-
-    TextEditingController problemcontroller=TextEditingController();
-  List <problemmodel> problemlist=[];
-
-    void addProblems(String userid ,String username){
-      String id = DateTime.now().millisecondsSinceEpoch.toString();
+  void addProblems(String userid, String username) {
+    String id = DateTime.now().millisecondsSinceEpoch.toString();
 
     HashMap<String, Object> problemMap = HashMap();
     problemMap["PROBLEMS"] = problemcontroller.text.toString();
@@ -1421,7 +1327,6 @@ String productSelectedCategoryID ="";
 
     db.collection("PROBLEMS").doc(id).set(problemMap);
     notifyListeners();
-
   }
 
   void getproblem() {
@@ -1430,10 +1335,8 @@ String productSelectedCategoryID ="";
         problemlist.clear();
         for (var value in value.docs) {
           problemlist.add(problemmodel(
-              value.get("USERNAME").toString(),
-              value.get("PROBLEMS").toString(),
-
-
+            value.get("USERNAME").toString(),
+            value.get("PROBLEMS").toString(),
           ));
           notifyListeners();
         }
@@ -1442,10 +1345,9 @@ String productSelectedCategoryID ="";
     });
   }
 
-   void clearProblems(){
-
-      problemcontroller.clear();
-   }
+  void clearProblems() {
+    problemcontroller.clear();
+  }
 
   List<String> adminFcmList = [];
 
@@ -1536,11 +1438,10 @@ String productSelectedCategoryID ="";
 
   Future<bool> callOnFcmApiSendPushNotifications(
       {required String title,
-        required String body,
-        required String fcmId,
-        required String imageLink}) async {
-
-    print(fcmId+"kmfmkfmkmk");
+      required String body,
+      required String fcmId,
+      required String imageLink}) async {
+    print(fcmId + "kmfmkfmkmk");
 
     Uri postUrl = Uri.parse('https://fcm.googleapis.com/fcm/send');
     final data = {
@@ -1560,7 +1461,7 @@ String productSelectedCategoryID ="";
     final headers = {
       'content-type': 'application/json',
       'Authorization':
-      'key=AAAARv0MhFg:APA91bFHm5hJzP7K15v959LgSp57dPpCJq1T1KNE4QwO-BfEiXnYAM0-ad3LGjtKe_1xVK4HBB7yHouP2C7TWY6JYi-lsMp6RB_uB7Jn0nT_HRWn8kAfq-hVMTx-lSnsg4hG0GNaS00E',
+          'key=AAAARv0MhFg:APA91bFHm5hJzP7K15v959LgSp57dPpCJq1T1KNE4QwO-BfEiXnYAM0-ad3LGjtKe_1xVK4HBB7yHouP2C7TWY6JYi-lsMp6RB_uB7Jn0nT_HRWn8kAfq-hVMTx-lSnsg4hG0GNaS00E',
       // 'key=YOUR_SERVER_KEY'cx
       'project_id': '304893166680'
     };
@@ -1580,9 +1481,7 @@ String productSelectedCategoryID ="";
       // on failure do sth
       return false;
     }
-
-   }
-
+  }
 
   // String fcmid='';
   //
@@ -1595,61 +1494,76 @@ String productSelectedCategoryID ="";
   //   notifyListeners();
   // }
 
-  String fcmid='';
+  String fcmid = '';
 
-  getAdminFcmId(){
-    print("ooaoaoaooa"+fcmid);
+  getAdminFcmId() {
+    print("ooaoaoaooa" + fcmid);
     print("kjkndvdknefvlknefv");
-    db.collection("USER")
-    .where("TYPE",isEqualTo: "ADMIN")
-        .get().then((event) {
-      if(event.docs.isNotEmpty){
+    db.collection("USER").where("TYPE", isEqualTo: "ADMIN").get().then((event) {
+      if (event.docs.isNotEmpty) {
         print("jsjsjs");
         // fcmid='';
-        for(var element in event.docs){
+        for (var element in event.docs) {
           Map<dynamic, dynamic> notificationMap = element.data();
-          fcmid=notificationMap["FCM_ID"]??"";
+          fcmid = notificationMap["FCM_ID"] ?? "";
           notifyListeners();
         }
         print("smncbwndbc");
       }
-
-      });
-
+    });
   }
-  getUserFcmId(){
-    print("ooaoajhvhgoaooa"+fcmid);
+
+  getUserFcmId() {
+    print("ooaoajhvhgoaooa" + fcmid);
     print("hhhhhh");
-    db.collection("USER")
-    .where("TYPE",isEqualTo: "USER")
-        .get().then((event) {
-      if(event.docs.isNotEmpty){
+    db.collection("USER").where("TYPE", isEqualTo: "USER").get().then((event) {
+      if (event.docs.isNotEmpty) {
         print("jsjsjs");
         // fcmid='';
-        for(var element in event.docs){
+        for (var element in event.docs) {
           Map<dynamic, dynamic> notificationMap = element.data();
-          fcmid=notificationMap["FCM_ID"]??"";
+          fcmid = notificationMap["FCM_ID"] ?? "";
           notifyListeners();
         }
         print("bhvbhgb");
       }
-
-      });
-
+    });
   }
 
+  List<notificationdetails> notificationlist = [];
 
+  void addNotification(String userid, String username, String title) {
+    String id = DateTime.now().millisecondsSinceEpoch.toString();
 
+    HashMap<String, Object> NotificationMaps = HashMap();
+    NotificationMaps["NOTIFICATION"] = title;
+    NotificationMaps["NOTIFICATION_ID"] = id;
+    NotificationMaps["USERID"] = userid;
+    NotificationMaps["USERNAME"] = username;
 
+    db.collection("NOTIFICATION").doc(id).set(NotificationMaps);
+    notifyListeners();
+  }
+
+  void getNotification(String userid) {
+    db
+        .collection("FAVORITE")
+        .where("USER_ID", isEqualTo: userid)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        notificationlist.clear();
+        for (var value in value.docs) {
+          notificationlist.add(notificationdetails(
+            value.get("NOTIFICATION").toString(),
+            value.get("NOTIFICATION_ID").toString(),
+            value.get("USERID").toString(),
+            value.get("USERNAME").toString(),
+          ));
+          notifyListeners();
+        }
+      }
+      notifyListeners();
+    });
+  }
 }
-
-
-
-
-
-
-
-
-
-
-

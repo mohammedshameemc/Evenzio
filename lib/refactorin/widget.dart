@@ -63,7 +63,8 @@ tF3(int lins,TextEditingController control) {
   return Container(
     decoration: BoxDecoration(color:  tranceparent,
         borderRadius: BorderRadius.circular(10)),
-    child: TextFormField(validator: (value) {
+    child: TextFormField(
+      validator: (value) {
       if(value==null||value.isEmpty){return "*Required ";}
       return  null;
       }

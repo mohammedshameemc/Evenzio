@@ -6,6 +6,7 @@ import 'package:firstproject/constance/colors.dart';
 import 'package:firstproject/user/loginpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gradient_animation_text/flutter_gradient_animation_text.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -62,8 +63,32 @@ class _SplashState extends State<Splash> {
                           fit: BoxFit.fill)),
                   child: Column(mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Evenzio",style:GoogleFonts.cevicheOne (fontSize: 60,color: Colors.white),),
-                      Text("Catering Event",style:GoogleFonts.alexBrush(fontSize: 30,color: Colors.white),),
+                      GradientAnimationText(
+                          text: Text(
+                              'Evenzio',style: TextStyle(fontFamily:'splashT1' ,fontSize: 60)
+                          ),
+                          colors: [
+                            maincolor,
+                            Colors.white,
+
+                          ],
+                          duration: Duration(seconds: 3),
+                          reverse: true,  // reverse
+                          ),
+                      GradientAnimationText(
+                        text: Text(
+                            'Catering Event',style: TextStyle(fontFamily:'splashT2' ,fontSize: 30)
+                        ),
+                        colors: [
+                          maincolor,
+                          Colors.white,
+
+                        ],
+                        duration: Duration(seconds: 3),
+                        reverse: true,  // reverse
+                      ),
+                      // Text("Evenzio",style:GoogleFonts.cevicheOne (fontSize: 60,color: Colors.white),),
+                      // Text("Catering Event",style:GoogleFonts.alexBrush(fontSize: 30,color: Colors.white),),
 
 
                     ],

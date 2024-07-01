@@ -115,6 +115,8 @@ class LoginProvider extends ChangeNotifier {
       }
       });
     }
+
+
 void clearLogin(){
 
     phoneController.clear();

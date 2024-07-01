@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class registration extends StatelessWidget {
   String from;
-  String profileid;
+  String  profileid;
    registration({super.key,required this.from,required this.profileid});
 
 
